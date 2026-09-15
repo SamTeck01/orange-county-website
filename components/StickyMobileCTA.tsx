@@ -14,10 +14,7 @@ export function StickyMobileCTA() {
 
   useEffect(() => {
     const hero = document.getElementById("explore");
-    if (!hero) {
-      setVisible(true);
-      return;
-    }
+    if (!hero) return;
     const observer = new IntersectionObserver(([entry]) => setVisible(!entry.isIntersecting), { threshold: 0 });
     observer.observe(hero);
     return () => observer.disconnect();

@@ -23,10 +23,7 @@ export function Header() {
      leaves the viewport. IntersectionObserver, not a scroll handler. */
   useEffect(() => {
     const hero = document.getElementById("explore");
-    if (!hero) {
-      setSolid(true);
-      return;
-    }
+    if (!hero) return;
     const observer = new IntersectionObserver(([entry]) => setSolid(!entry.isIntersecting), { rootMargin: "-72px 0px 0px 0px" });
     observer.observe(hero);
     return () => observer.disconnect();

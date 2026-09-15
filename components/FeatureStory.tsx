@@ -59,6 +59,7 @@ function FeatureCard({ index, total }: { index: number; total: number }) {
           // Each card parks a little lower than the one before, so the stack
           // shows a stepped edge instead of a single flat slab.
           "--stack-top": `${5.25 + index * 0.9}rem`,
+          zIndex: index + 1,
         } as React.CSSProperties
       }
       className="stack-card relative isolate overflow-hidden rounded-[24px] bg-oc-ink-deep text-oc-paper md:rounded-[28px]"

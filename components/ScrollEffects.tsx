@@ -16,8 +16,6 @@ export function ScrollEffects() {
 
     let frame = 0;
     let cards: HTMLElement[] = [];
-    const desktop = window.matchMedia("(min-width: 810px)");
-
     const collect = () => {
       cards = Array.from(document.querySelectorAll<HTMLElement>("[data-stack-card]"));
     };
@@ -39,11 +37,6 @@ export function ScrollEffects() {
          slid over it. Measuring the overlap directly avoids doing runway
          arithmetic, and getBoundingClientRect() on a stuck element returns
          its stuck position, which is exactly what we want to compare. */
-      if (!desktop.matches) {
-        cards.forEach((card) => card.style.setProperty("--exit", "0"));
-        return;
-      }
-
       for (let i = 0; i < cards.length; i += 1) {
         const card = cards[i];
         const next = cards[i + 1];
