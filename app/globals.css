@@ -1,0 +1,296 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+/* ============================================================
+   ORANGE COUNTY — DESIGN SYSTEM
+   Tokens, one type scale, one rhythm, one reveal mechanic.
+   Sections consume these. Sections do not invent their own.
+   ============================================================ */
+
+:root {
+  /* Brand — sampled from the Product Paper, not guessed */
+  --oc-orange: #fe9402;
+  --oc-orange-deep: #e27f00;
+  --oc-orange-tint: #fff1dc;
+  --oc-green: #006015;
+  --oc-green-deep: #00430f;
+  --oc-green-tint: #c0d8c4;
+  --oc-paper: #f8f8f8;
+  --oc-paper-warm: #f8faef;
+  --oc-ink: #101a12;
+  --oc-ink-deep: #080d09;
+  --oc-ink-soft: #4a5a50;
+  --oc-line: rgba(0, 96, 21, 0.14);
+  --oc-line-light: rgba(248, 248, 248, 0.18);
+
+  /* Type scale — fluid, single source of truth */
+  --t-display: clamp(3.4rem, 12.5vw, 10rem);
+  --t-h1: clamp(2.35rem, 6.6vw, 5.5rem);
+  --t-h2: clamp(1.6rem, 3.6vw, 2.75rem);
+  --t-h3: clamp(1.2rem, 2vw, 1.6rem);
+  --t-lead: clamp(1.0625rem, 1.5vw, 1.375rem);
+  --t-body: 1rem;
+  --t-small: 0.875rem;
+
+  /* Rhythm */
+  --pad-x: clamp(1.25rem, 5vw, 4rem);
+  --sec-y: clamp(4.5rem, 11vh, 9rem);
+  --sec-y-lg: clamp(6.5rem, 17vh, 13rem);
+  --shell: 1440px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+}
+
+/* Instrument Serif is a high-contrast display face. It needs tight tracking
+   at large sizes and it must never be set in all-caps at display size —
+   the caps have no optical correction and read as a cheap headline. */
+.font-serif {
+  font-feature-settings: "liga" 1, "kern" 1;
+}
+
+@media (max-width: 767px) {
+  #main-content {
+    padding-bottom: 5.25rem;
+  }
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--oc-orange);
+  color: var(--oc-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--oc-orange);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  background: var(--oc-paper);
+  color: var(--oc-ink);
+  padding: 0.75rem 1rem;
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: 0.75rem;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   REVEAL — one mechanic for the whole site.
+   A section gets .is-in from IntersectionObserver; children with
+   [data-reveal] animate, staggered by --i. No React state.
+   ============================================================ */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity 800ms var(--ease-out),
+    transform 800ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.is-in [data-reveal] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Masked line reveal — the premium type entrance. Wrap clips, inner slides. */
+.mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.mask > span {
+  display: block;
+  transform: translate3d(0, 105%, 0);
+  transition: transform 1000ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 85ms);
+}
+.is-in .mask > span {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Hairline that draws itself in */
+.rule-draw {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 900ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms + 150ms);
+}
+.is-in .rule-draw {
+  transform: scaleX(1);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.hero-media {
+  position: absolute;
+  inset: -8% 0 -8% 0;
+  will-change: transform;
+  transform: translate3d(0, var(--hero-parallax, 0%), 0) scale(var(--hero-scale, 1));
+}
+
+/* Legibility comes from composition: a graded fall-off anchored to the
+   corner the type sits in, plus a solid slate bar. Not a full-frame wash. */
+.hero-grade {
+  background:
+    linear-gradient(to top, rgba(8, 13, 9, 0.88) 0%, rgba(8, 13, 9, 0.45) 26%, rgba(8, 13, 9, 0) 58%),
+    linear-gradient(to right, rgba(8, 13, 9, 0.6) 0%, rgba(8, 13, 9, 0) 62%),
+    linear-gradient(to bottom, rgba(8, 13, 9, 0.5) 0%, rgba(8, 13, 9, 0) 22%);
+}
+
+.hero-scroll-cue span {
+  display: block;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--oc-paper));
+  transform-origin: top;
+  animation: cue 2200ms var(--ease-out) infinite;
+}
+@keyframes cue {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  35% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1) translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   FEATURE STACK — sticky cards that shrink, tilt and blur away.
+   --exit (0 → 1) is written per card by ScrollEffects via rAF.
+   Blur is capped at 8px and disabled below 810px for performance.
+   ============================================================ */
+
+/* Mobile: a plain stacked sequence. The previous sticky build left ~3
+   viewports of dead space on a phone and only ever showed scene 1. */
+.stack-card {
+  position: static;
+}
+.stack-card + .stack-card {
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 810px) {
+  .stack-card {
+    position: sticky;
+    top: var(--stack-top, 6rem);
+    will-change: transform;
+    transform-origin: center 28%;
+    transform: scale(calc(1 - var(--exit, 0) * 0.14)) rotate(calc(var(--exit, 0) * -4deg));
+    opacity: calc(1 - var(--exit, 0) * 0.8);
+    /* capped at 8px — large-surface blur past that drops frames */
+    filter: blur(calc(var(--exit, 0) * 8px));
+  }
+  /* The runway: the scroll distance the next card travels to cover this one.
+     It is what gives each card its own beat instead of four cards arriving
+     at once. The last card has none — the section ends on it. */
+  .stack-card + .stack-card {
+    margin-top: clamp(20rem, 46vh, 32rem);
+  }
+  /* The final card never exits; it is the one the next section scrolls over. */
+  .stack-card[data-last="true"] {
+    transform: none;
+    opacity: 1;
+    filter: none;
+  }
+}
+
+.card-noise {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.11) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+/* ============================================================
+   SECTION HELPERS
+   ============================================================ */
+
+.edge-fade-r {
+  -webkit-mask-image: linear-gradient(to right, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 82%, transparent 100%);
+}
+
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION — every mechanic resolves to its finished state
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .mask > span {
+    transform: none !important;
+  }
+  .rule-draw {
+    transform: scaleX(1) !important;
+  }
+  .stack-card {
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+  .stack-card + .stack-card {
+    margin-top: 1.5rem !important;
+  }
+  .hero-media {
+    transform: none !important;
+  }
+  .marquee-track {
+    animation: none !important;
+  }
+  .hero-scroll-cue {
+    display: none !important;
+  }
+}

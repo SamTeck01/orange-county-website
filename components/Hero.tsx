@@ -1,0 +1,148 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { positioning } from "@/content/orange-county";
+import { assets } from "@/content/assets";
+import { blurFor } from "@/lib/media";
+import { entryPrice, estateName, locationLine, plotSizes, surveyStatus, titleStatus, whatsappHref } from "@/lib/site";
+import { Action } from "@/components/primitives";
+import { useReducedMotion } from "@/lib/useReducedMotion";
+
+/** Facts only — every value here is read from content/orange-county.ts. */
+const rail = [
+  { label: "Plots from", value: entryPrice.display },
+  { label: "Sizes", value: `${plotSizes} sqm` },
+  { label: "Title", value: titleStatus },
+  { label: "Survey", value: surveyStatus },
+];
+
+function HeroMedia() {
+  const reduced = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [failed, setFailed] = useState(false);
+  const video = assets.heroVideo;
+
+  useEffect(() => {
+    const node = videoRef.current;
+    if (!node || reduced) return;
+    // Some browsers reject autoplay even when muted (iOS Low Power Mode).
+    // If it rejects, fall through to the still so the frame is never empty.
+    const attempt = node.play();
+    if (attempt) attempt.catch(() => setFailed(true));
+  }, [reduced]);
+
+  const showStill = reduced || failed || !video.src;
+
+  if (showStill) {
+    return assets.hero.src ? (
+      <Image
+        src={assets.hero.src}
+        alt={assets.hero.alt}
+        fill
+        priority
+        sizes="100vw"
+        placeholder="blur"
+        blurDataURL={blurFor(assets.hero.src)}
+        className="object-cover"
+        style={{ objectPosition: assets.hero.focal }}
+      />
+    ) : (
+      <div aria-hidden="true" className="absolute inset-0 bg-oc-green-deep" />
+    );
+  }
+
+  return (
+    <video
+      ref={videoRef}
+      className="absolute inset-0 h-full w-full object-cover"
+      src={video.src ?? undefined}
+      poster={video.poster ?? undefined}
+      muted
+      loop
+      playsInline
+      autoPlay
+      preload="auto"
+      disablePictureInPicture
+      aria-hidden="true"
+      tabIndex={-1}
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
+export function Hero() {
+  return (
+    <section
+      id="explore"
+      aria-label={`${estateName} — ${locationLine}`}
+      className="relative isolate flex min-h-svh flex-col overflow-hidden bg-oc-ink-deep text-oc-paper [--hero-parallax:0%] [--hero-progress:0] [--hero-scale:1.04]"
+    >
+      <div className="hero-media -z-10">
+        <HeroMedia />
+      </div>
+      <div aria-hidden="true" className="hero-grade absolute inset-0 -z-[5]" />
+
+      {/* Composition: type sits in the lower-left, where the grade is deepest
+          and the aerial is darkest. Legibility is compositional, not a wash. */}
+      <div className="is-in relative z-10 flex flex-1 items-end px-gut pb-8 pt-32 md:pb-10">
+        <div className="mx-auto w-full max-w-shell">
+          <p className="mask mb-5 md:mb-7" style={{ "--i": 0 } as React.CSSProperties}>
+            <span className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-oc-paper/75">{locationLine}</span>
+          </p>
+
+          <h1 className="font-serif text-display text-oc-paper">
+            <span className="mask" style={{ "--i": 1 } as React.CSSProperties}>
+              <span>{estateName.split(" ")[0]}</span>
+            </span>
+            <span className="mask md:pl-[0.14em]" style={{ "--i": 2 } as React.CSSProperties}>
+              <span>{estateName.split(" ").slice(1).join(" ")}</span>
+            </span>
+          </h1>
+
+          <div className="mt-7 flex items-start gap-4 md:mt-9 md:gap-5">
+            <span aria-hidden="true" className="rule-draw mt-[0.85em] h-px w-10 shrink-0 origin-left bg-oc-orange md:w-16" style={{ "--i": 3 } as React.CSSProperties} />
+            <p data-reveal style={{ "--i": 4 } as React.CSSProperties} className="max-w-[26ch] font-serif text-h2 italic leading-[1.05] text-oc-paper/95">
+              {positioning.tagline}
+            </p>
+          </div>
+
+          <div data-reveal style={{ "--i": 5 } as React.CSSProperties} className="mt-9 flex flex-col gap-2.5 sm:flex-row md:mt-12">
+            <Action href="#positioning" variant="primary" className="w-full sm:w-auto">
+              Explore the estate
+            </Action>
+            {whatsappHref ? (
+              <Action href={whatsappHref} variant="ghost-dark" className="w-full sm:w-auto">
+                Talk to an agent
+              </Action>
+            ) : null}
+          </div>
+        </div>
+      </div>
+
+      {/* The slate: a solid bar carrying four confirmed facts. This is the
+          conversion surface and it doubles as the composition's baseline. */}
+      <div className="relative z-10 border-t border-oc-paper/15 bg-oc-ink-deep/70 backdrop-blur-sm">
+        <dl className="mx-auto grid max-w-shell grid-cols-2 px-gut md:grid-cols-4">
+          {rail.map((item, index) => (
+            <div
+              key={item.label}
+              className={`flex flex-col gap-1.5 py-4 md:py-5 ${index % 2 === 1 ? "border-l border-oc-paper/15 pl-4 md:pl-6" : "md:pl-0"} ${index > 1 ? "border-t border-oc-paper/15 md:border-t-0" : ""} ${index === 2 ? "md:border-l md:pl-6" : ""} ${index === 3 ? "md:pl-6" : ""}`}
+            >
+              <dt className="font-mono text-[0.625rem] uppercase tracking-[0.16em] text-oc-paper/55">{item.label}</dt>
+              <dd className="font-mono text-[0.8125rem] leading-tight text-oc-paper md:text-sm">{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <div
+        aria-hidden="true"
+        className="hero-scroll-cue pointer-events-none absolute bottom-[7.5rem] right-gut z-10 hidden h-14 w-px md:block"
+        style={{ opacity: "calc(1 - min(1, var(--hero-progress) * 6))" }}
+      >
+        <span />
+      </div>
+    </section>
+  );
+}
