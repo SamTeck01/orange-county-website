@@ -100,9 +100,12 @@ export const assets = {
 };
 
 /** Real photographs of the four landmarks. Order matches `landmarks` in content. */
-export const landmarkImages: MediaAsset[] = [
+export const landmarkImages: (MediaAsset | MediaAsset[])[] = [
   { src: "/images/landmark-iseyin-express.webp", alt: "Photograph of the Iseyin Express road" },
-  { src: "/images/landmark-police-hq.webp", alt: "Photograph of the Divisional Police Headquarters, Balogun" },
+  [
+    { src: "/images/IMG-20260915-WA0035.jpg", alt: "Photograph of the Divisional Police Headquarters, Balogun" },
+    { src: "/images/IMG-20260915-WA0036.jpg", alt: "Photograph of the Divisional Police Headquarters, Balogun" },
+  ],
   { src: "/images/landmark-film-village.webp", alt: "Photograph of Afri Chatta Film Village" },
   { src: "/images/landmark-asphalt-plant.webp", alt: "Photograph of the Danbaba asphalt plant" },
 ];

@@ -64,10 +64,12 @@ function FeatureCard({ index, total }: { index: number; total: number }) {
       }
       className="stack-card relative isolate overflow-hidden rounded-[24px] bg-oc-ink-deep text-oc-paper md:rounded-[28px]"
     >
-      {/* Blurred bed of the same image — gives the card depth behind the
-          sharp inset, and means the card is never a flat rectangle. */}
+      {/* Blurred bed of the same image — gives the card depth behind the sharp
+          inset. Desktop only: on a phone it is a second full-width decode per
+          card AND a large blurred surface the compositor has to carry through
+          every scroll frame. The ink field plus noise does the job there. */}
       {hasMedia && asset.src ? (
-        <div aria-hidden="true" className="absolute inset-0 -z-10 scale-110">
+        <div aria-hidden="true" className="absolute inset-0 -z-10 hidden scale-110 md:block">
           <Image src={asset.src} alt="" fill sizes="100vw" className="object-cover blur-[26px]" placeholder="blur" blurDataURL={blurFor(asset.src)} />
         </div>
       ) : null}

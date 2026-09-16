@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { landmarks } from "@/content/orange-county";
-import { landmarkImages } from "@/content/assets";
+import { landmarkImages, type MediaAsset } from "@/content/assets";
 import { blurFor } from "@/lib/media";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
@@ -22,7 +22,9 @@ export function Landmarks() {
 
         <ol className="mt-12 md:mt-20">
           {landmarks.map((landmark, index) => {
-            const photo = landmarkImages[index];
+            const photoSource = landmarkImages[index];
+            const photos = Array.isArray(photoSource) ? photoSource : photoSource ? [photoSource] : [];
+            const validPhotos = photos.filter((photo): photo is MediaAsset & { src: string } => typeof photo.src === "string");
             return (
               <li key={landmark.title} className="border-t border-oc-line py-8 last:border-b md:py-12">
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-10">
@@ -42,18 +44,21 @@ export function Landmarks() {
                     </div>
                   </div>
 
-                  {photo?.src ? (
+                  {photos[0]?.src ? (
                     <figure data-reveal style={{ "--i": 2 } as React.CSSProperties} className="relative aspect-[16/10] overflow-hidden md:col-span-5 md:col-start-8 md:aspect-[4/3]">
-                      <Image
-                        src={photo.src}
-                        alt={photo.alt}
-                        fill
-                        loading="lazy"
-                        sizes="(min-width: 810px) 38vw, 100vw"
-                        placeholder="blur"
-                        blurDataURL={blurFor(photo.src)}
-                        className="object-cover"
-                      />
+                      {validPhotos.map((photo, photoIndex) => (
+                        <Image
+                          key={photo.src}
+                            src={photo.src}
+                          alt={photo.alt}
+                          fill
+                          loading="lazy"
+                          sizes="(min-width: 810px) 38vw, 100vw"
+                          placeholder="blur"
+                          blurDataURL={blurFor(photo.src)}
+                          className={photos.length > 1 ? `landmark-slide landmark-slide-${photoIndex}` : "object-cover"}
+                        />
+                      ))}
                     </figure>
                   ) : null}
                 </div>

@@ -202,32 +202,47 @@ button {
    Blur is capped at 8px and disabled below 810px for performance.
    ============================================================ */
 
-/* Mobile: a plain stacked sequence. The previous sticky build left ~3
-   viewports of dead space on a phone and only ever showed scene 1. */
+/* One mechanic at every width: the same scale, tilt and fade, so the phone
+   behaves like the laptop. Mobile just runs it on a short 18vh runway instead
+   of a full-viewport one.
+
+   THERE IS DELIBERATELY NO `transition` ON THIS TRANSFORM. --exit is rewritten
+   on every animation frame, so a transition would restart 60 times a second
+   and the card would chase the scroll position instead of tracking it — that
+   is what read as sluggish. Scroll-linked transforms must be instant; the
+   smoothness comes from the scroll itself. */
 .stack-card {
   position: sticky;
-  top: 4rem;
-  will-change: transform, opacity, filter;
-  transition: transform 700ms var(--ease-out);
+  top: var(--stack-top, 4rem);
+  will-change: transform, opacity;
   transform-origin: center 28%;
-  transform: scale(calc(1 - var(--exit, 0) * 0.1)) rotate(calc(var(--exit, 0) * -5deg));
-  opacity: calc(1 - var(--exit, 0) * 0.65);
-  filter: blur(calc(var(--exit, 0) * 4px));
+  transform: scale(calc(1 - var(--exit, 0) * 0.14)) rotate(calc(var(--exit, 0) * -4deg));
+  /* MOBILE: opacity carries the whole exit, because there is no blur here to
+     sell the recede. It fades almost to nothing — by the time --exit hits 1
+     the next card has fully covered this one anyway, so nothing is lost. */
+  opacity: calc(1 - var(--exit, 0) * 0.96);
 }
 .stack-card + .stack-card {
   margin-top: 0;
   margin-bottom: 18vh;
 }
+/* The final card never exits; it is the one the next section scrolls over. */
+.stack-card[data-last="true"] {
+  transform: none;
+  opacity: 1;
+  filter: none;
+}
 
 @media (min-width: 810px) {
+  /* DESKTOP: blur does the receding, so the opacity fade pulls back to let it
+     read. Blur is desktop-only on purpose — an animated filter forces the
+     browser to re-rasterize the entire card (background image, noise layer,
+     type) every frame, which is the most expensive thing you can ask a phone
+     GPU to do mid-scroll. Capped at 8px even here; past that it drops frames
+     on a large surface. */
   .stack-card {
-    position: sticky;
-    top: var(--stack-top, 6rem);
-    will-change: transform;
-    transform-origin: center 28%;
-    transform: scale(calc(1 - var(--exit, 0) * 0.14)) rotate(calc(var(--exit, 0) * -4deg));
+    will-change: transform, opacity, filter;
     opacity: calc(1 - var(--exit, 0) * 0.8);
-    /* capped at 8px — large-surface blur past that drops frames */
     filter: blur(calc(var(--exit, 0) * 8px));
   }
   /* The runway: the scroll distance the next card travels to cover this one.
@@ -236,12 +251,6 @@ button {
   .stack-card + .stack-card {
     margin-top: clamp(20rem, 46vh, 32rem);
     margin-bottom: 0;
-  }
-  /* The final card never exits; it is the one the next section scrolls over. */
-  .stack-card[data-last="true"] {
-    transform: none;
-    opacity: 1;
-    filter: none;
   }
 }
 
@@ -271,6 +280,23 @@ button {
 .hero-facts-track {
   animation: hero-facts-marquee 32s linear infinite;
   will-change: transform;
+}
+
+.landmark-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: landmark-crossfade 8s ease-in-out infinite;
+}
+.landmark-slide-0 { animation-delay: 0s; }
+.landmark-slide-1 { animation-delay: 4s; }
+@keyframes landmark-crossfade {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100% { opacity: 1; }
 }
 @keyframes hero-facts-marquee {
   from { transform: translate3d(0, 0, 0); }
@@ -319,6 +345,15 @@ button {
   }
   .hero-facts-track {
     animation: none !important;
+  }
+  .landmark-slide {
+    animation: none !important;
+  }
+  .landmark-slide-0 {
+    opacity: 1 !important;
+  }
+  .landmark-slide-1 {
+    opacity: 0 !important;
   }
   .hero-scroll-cue {
     display: none !important;

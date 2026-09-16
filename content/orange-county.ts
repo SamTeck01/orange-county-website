@@ -4,6 +4,10 @@ export const positioning = {
 };
 
 export const documentation = {
+  items: ["Allocation Letter", "Deed of Agreement", "Receipt"],
+};
+
+export const landTitle = {
   items: ["C of O in View", "Registered Survey Plan"],
 };
 
@@ -98,6 +102,7 @@ export const developer = { name: "Pace Consult" };
 
 export type Positioning = typeof positioning;
 export type Documentation = typeof documentation;
+export type LandTitle = typeof landTitle;
 export type Feature = (typeof features)[number];
 export type Location = typeof location;
 export type Landmark = (typeof landmarks)[number];
