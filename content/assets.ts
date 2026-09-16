@@ -60,6 +60,11 @@ export const assets = {
   // No camera appears anywhere in the 3D package. A stock CCTV photograph
   // would be a claim we cannot support, so this scene is typographic.
   featureCctv: { src: null, alt: "" },
+  featureCctv: {
+    src: "/images/feature-cctv.webp",
+    alt: "Photograph of CCTV surveillance cameras on estate security pole",
+    focal: "center 35%",
+  },
   featureGated: {
     src: "/images/feature-gated-entry.webp",
     alt: "3D render of the gated entrance and guardhouse at Orange County, Balogun, Oyo",
