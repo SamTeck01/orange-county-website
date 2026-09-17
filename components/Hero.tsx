@@ -127,6 +127,10 @@ export function Hero() {
             <div
               key={`${item.label}-${index}`}
               className="flex items-baseline gap-3 whitespace-nowrap px-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em]"
+              /* Second copy of the rail exists only so the marquee loops
+                 seamlessly; hide it from assistive tech so the four facts are
+                 not announced twice. */
+              aria-hidden={index >= rail.length ? true : undefined}
             >
               <span className="text-oc-ink-soft">{item.label}</span>
               <span className="text-oc-green">{item.value}</span>

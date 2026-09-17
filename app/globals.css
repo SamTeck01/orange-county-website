@@ -34,8 +34,8 @@
 
   /* Rhythm */
   --pad-x: clamp(1.25rem, 5vw, 4rem);
-  --sec-y: clamp(4.5rem, 11vh, 9rem);
-  --sec-y-lg: clamp(6.5rem, 17vh, 13rem);
+  --sec-y: clamp(4.5rem, 11svh, 9rem);
+  --sec-y-lg: clamp(6.5rem, 17svh, 13rem);
   --shell: 1440px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

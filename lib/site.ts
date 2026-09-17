@@ -1,4 +1,4 @@
-import { contact, developer, documentation, location, plots, positioning } from "@/content/orange-county";
+import { contact, developer, landTitle, location, plots, positioning } from "@/content/orange-county";
 
 /**
  * The estate name is derived from the one place it is stated in content,
@@ -16,8 +16,8 @@ export const plotSizes = plots
   .map((plot) => plot.size.replace(/sqm$/i, ""))
   .join(" / ");
 
-export const titleStatus = documentation.items[0];
-export const surveyStatus = documentation.items[1];
+export const titleStatus = landTitle.items[0];
+export const surveyStatus = landTitle.items[1];
 
 export const whatsappHref = contact.whatsappPrimary
   ? `https://wa.me/${contact.whatsappPrimary}`

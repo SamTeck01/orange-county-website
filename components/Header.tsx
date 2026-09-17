@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { contact } from "@/content/orange-county";
 import { assets } from "@/content/assets";
-import { estateName, whatsappHref } from "@/lib/site";
+import { estateName, telHref, whatsappHref } from "@/lib/site";
 
 const nav = [
   { label: "The estate", href: "#positioning" },
@@ -18,6 +18,7 @@ export function Header() {
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   /* One state flip, not one per frame: the header solidifies when the hero
      leaves the viewport. IntersectionObserver, not a scroll handler. */
@@ -31,18 +32,24 @@ export function Header() {
 
   useEffect(() => {
     if (!open) return;
+    const trigger = menuButtonRef.current;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    /* Focus enters the panel, and returns to the trigger on close: an
+       aria-modal dialog that leaves focus behind the overlay strands
+       keyboard users on content they cannot see. */
+    panelRef.current?.querySelector<HTMLElement>("button")?.focus();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      trigger?.focus();
     };
   }, [open]);
 
-  const tel = contact.phones[0] ? `tel:+234${contact.phones[0].replace(/^0/, "")}` : null;
+  const tel = contact.phones[0] ? telHref(contact.phones[0]) : null;
 
   return (
     <header
@@ -80,6 +87,7 @@ export function Header() {
           ) : null}
 
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
