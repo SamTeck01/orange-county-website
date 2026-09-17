@@ -2,6 +2,8 @@ export type MediaAsset = {
   src: string | null;
   alt: string;
   focal?: string;
+  videoSrc?: string;
+  poster?: string;
 };
 
 export type VideoAsset = {
@@ -59,7 +61,6 @@ export const assets = {
   },
   // No camera appears anywhere in the 3D package. A stock CCTV photograph
   // would be a claim we cannot support, so this scene is typographic.
-  featureCctv: { src: null, alt: "" },
   featureCctv: {
     src: "/images/feature-cctv.webp",
     alt: "Photograph of CCTV surveillance cameras on estate security pole",
@@ -106,7 +107,12 @@ export const assets = {
 
 /** Real photographs of the four landmarks. Order matches `landmarks` in content. */
 export const landmarkImages: (MediaAsset | MediaAsset[])[] = [
-  { src: "/images/landmark-iseyin-express.webp", alt: "Photograph of the Iseyin Express road" },
+  {
+    src: "/images/landmark-iseyin-express.webp",
+    alt: "Footage of the Iseyin Express road",
+    videoSrc: "/video/landmark-iseyin-express.mp4",
+    poster: "/images/landmark-iseyin-express-poster.jpg",
+  },
   [
     { src: "/images/IMG-20260915-WA0035.jpg", alt: "Photograph of the Divisional Police Headquarters, Balogun" },
     { src: "/images/IMG-20260915-WA0036.jpg", alt: "Photograph of the Divisional Police Headquarters, Balogun" },

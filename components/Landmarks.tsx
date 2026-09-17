@@ -44,21 +44,36 @@ export function Landmarks() {
                     </div>
                   </div>
 
-                  {photos[0]?.src ? (
+                  {photos[0]?.src || photos[0]?.videoSrc ? (
                     <figure data-reveal style={{ "--i": 2 } as React.CSSProperties} className="relative aspect-[16/10] overflow-hidden md:col-span-5 md:col-start-8 md:aspect-[4/3]">
-                      {validPhotos.map((photo, photoIndex) => (
-                        <Image
-                          key={photo.src}
-                            src={photo.src}
-                          alt={photo.alt}
-                          fill
-                          loading="lazy"
-                          sizes="(min-width: 810px) 38vw, 100vw"
-                          placeholder="blur"
-                          blurDataURL={blurFor(photo.src)}
-                          className={photos.length > 1 ? `landmark-slide landmark-slide-${photoIndex}` : "object-cover"}
-                        />
-                      ))}
+                      {validPhotos.map((photo, photoIndex) =>
+                        photo.videoSrc ? (
+                          <video
+                            key={photo.videoSrc}
+                            src={photo.videoSrc}
+                            poster={photo.poster ?? photo.src ?? undefined}
+                            playsInline
+                            autoPlay
+                            muted
+                            loop
+                            preload="metadata"
+                            aria-label={photo.alt}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <Image
+                            key={photo.src}
+                            src={photo.src!}
+                            alt={photo.alt}
+                            fill
+                            loading="lazy"
+                            sizes="(min-width: 810px) 38vw, 100vw"
+                            placeholder="blur"
+                            blurDataURL={blurFor(photo.src)}
+                            className={photos.length > 1 ? `landmark-slide landmark-slide-${photoIndex}` : "object-cover"}
+                          />
+                        )
+                      )}
                     </figure>
                   ) : null}
                 </div>

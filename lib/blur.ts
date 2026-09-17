@@ -7,7 +7,6 @@ export const TONE: Record<string, string> = {
   "facility-football-pitch": "#879283",
   "facility-gym": "#838480",
   "facility-mini-mart": "#848783",
-  "feature-cctv": "#4e5972",
   "feature-cctv": "#8898b8",
   "feature-gated": "#75655c",
   "feature-gated-entry": "#a39f99",
