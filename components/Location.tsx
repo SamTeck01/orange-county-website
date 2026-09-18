@@ -1,13 +1,26 @@
 import Image from "next/image";
 import { location } from "@/content/orange-county";
-import { assets } from "@/content/assets";
+import { assets, landmarkImages } from "@/content/assets";
 import { blurFor } from "@/lib/media";
 import { Eyebrow, Heading, InView, Rule, Shell } from "@/components/primitives";
+
+/**
+ * The road footage, read from the landmarks content rather than re-declared
+ * here. Two places on this page play it, and because both resolve to the same
+ * URL the browser downloads the file once. A second copy of the path string is
+ * the only thing that could break that, so there is deliberately only one.
+ */
+function roadFootage() {
+  const entry = landmarkImages[0];
+  const media = Array.isArray(entry) ? entry[0] : entry;
+  return media?.videoSrc ? media : null;
+}
 
 export function Location() {
   /* content.location.coordinates is null — there is no GPS point in the
      brief, so this renders as a place, not as a map with a dropped pin. */
   const area = location.area.replace(/\.$/, "");
+  const footage = roadFootage();
 
   return (
     <InView as="section" id="location" aria-label="Location" className="overflow-hidden bg-oc-paper-warm py-sec text-oc-ink" amount={0.1}>
@@ -26,8 +39,30 @@ export function Location() {
         </div>
       </Shell>
 
-      {/* Full-bleed on purpose: the place should feel wider than the page. */}
-      {assets.locationMap.src ? (
+      {/* Full-bleed on purpose: the place should feel wider than the page.
+          The still underneath is not decoration — it is the complete
+          composition for prefers-reduced-motion (the footage removes itself
+          with motion-reduce) and it holds the frame while the footage buffers. */}
+      {footage?.videoSrc ? (
+        <figure data-reveal style={{ "--i": 4 } as React.CSSProperties} className="relative mt-10 h-[48svh] w-full md:mt-16 md:h-[68svh]">
+          {footage.poster ? <Image src={footage.poster} alt="" fill sizes="100vw" className="object-cover" /> : null}
+          <video
+            src={footage.videoSrc}
+            poster={footage.poster ?? undefined}
+            muted
+            loop
+            playsInline
+            autoPlay
+            preload="metadata"
+            aria-hidden="true"
+            tabIndex={-1}
+            className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+          />
+          <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-oc-ink-deep/75 to-transparent px-gut pb-5 pt-16">
+            <span className="mx-auto block max-w-shell font-mono text-[0.625rem] uppercase tracking-[0.16em] text-oc-paper/85">{footage.alt}</span>
+          </figcaption>
+        </figure>
+      ) : assets.locationMap.src ? (
         <figure data-reveal style={{ "--i": 4 } as React.CSSProperties} className="relative mt-10 h-[48svh] w-full md:mt-16 md:h-[68svh]">
           <Image
             src={assets.locationMap.src}
