@@ -74,10 +74,10 @@ export const communityVision = {
 };
 
 export const plots = [
-  { size: "300sqm",          price: 500000,  display: "₦500,000",   availability: null },
-  { size: "450sqm",          price: 750000,  display: "₦750,000",   availability: null },
-  { size: "600sqm",          price: 1000000, display: "₦1,000,000", availability: null },
-  { size: "Commercial Plots", price: 1000000, display: "₦1,000,000", availability: null },
+  { size: "300sqm",          price: 650000,  display: "₦650,000",   availability: null },
+  { size: "450sqm",          price: 1000000, display: "₦1,000,000", availability: null },
+  { size: "600sqm",          price: 1300000, display: "₦1,300,000", availability: null },
+  { size: "Commercial Plot", price: 2000000, display: "₦2,000,000", availability: null },
 ];
 
 export const payment = {
