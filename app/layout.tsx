@@ -5,6 +5,7 @@ import { assets } from "@/content/assets";
 import { entryPrice, estateName, locationLine, plotSizes } from "@/lib/site";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 import { ScrollEffects } from "@/components/ScrollEffects";
+import { Analytics } from "@vercel/analytics/next";
 
 const description = `${estateName} is a residential estate in ${locationLine} by ${developer.name}. Plots of ${plotSizes} sqm from ${entryPrice.display}.`;
 
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ScrollEffects />
         {children}
         <StickyMobileCTA />
+        <Analytics />
       </body>
     </html>
   );
