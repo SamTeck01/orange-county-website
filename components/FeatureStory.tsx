@@ -9,10 +9,8 @@ import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 const featureMedia: MediaAsset[] = [assets.featureRoad, assets.featureSolar, assets.featureCctv, assets.featureGated];
 
 /**
- * Drawn coverage motif — used where there is no photograph.
- * No render in the 3D package contains a camera, and a stock CCTV photo
- * would be a claim we cannot support. The absence becomes the design:
- * this is the one dark card in the sequence.
+ * Drawn coverage motif — the designed empty state for any feature whose
+ * asset src is null. Not shown today: every feature has a photograph.
  */
 function CoverageMotif() {
   return (
