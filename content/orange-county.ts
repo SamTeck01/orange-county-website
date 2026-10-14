@@ -55,7 +55,7 @@ export const benefits = [
     lead: "Structured installment framework allowing:",
     points: ["Entry with manageable commitment", "Phased payments", "Early lock-in advantage"] },
   { title: "Institutional Backing & Professional Oversight",
-    lead: "Powered by Pace Associates:",
+    lead: "Powered by Pace Consult:",
     points: ["Survey clarity", "Allocation transparency", "Structured documentation", "Professional project supervision"] },
   { title: "Strategic Growth Corridor Advantage",
     lead: "Strategically located in Balogun Oyo — an emerging area with strong growth potential and promising investment advantages.",
