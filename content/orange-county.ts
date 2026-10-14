@@ -1,6 +1,6 @@
 export const positioning = {
   tagline: "...not for everyone.",
-  body: "Orange County is an avant-garde residential estate that represents the height of modern living and a prime investment opportunity in Balogun, Oyo, Nigeria. Developed by Pace consult.",
+  body: "Orange County is an avant-garde residential estate that represents the height of modern living and a prime investment opportunity in Balogun, Oyo, Nigeria. Developed by Pace Consults.",
 };
 
 export const documentation = {
@@ -55,7 +55,7 @@ export const benefits = [
     lead: "Structured installment framework allowing:",
     points: ["Entry with manageable commitment", "Phased payments", "Early lock-in advantage"] },
   { title: "Institutional Backing & Professional Oversight",
-    lead: "Powered by Pace Consult:",
+    lead: "Powered by Pace Consults:",
     points: ["Survey clarity", "Allocation transparency", "Structured documentation", "Professional project supervision"] },
   { title: "Strategic Growth Corridor Advantage",
     lead: "Strategically located in Balogun Oyo — an emerging area with strong growth potential and promising investment advantages.",
@@ -98,7 +98,7 @@ export const contact = {
   officeAddress: null,
 };
 
-export const developer = { name: "Pace Consult" };
+export const developer = { name: "Pace Consults" };
 
 export type Positioning = typeof positioning;
 export type Documentation = typeof documentation;
