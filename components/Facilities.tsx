@@ -1,18 +1,19 @@
 import Image from "next/image";
-import { facilities } from "@/content/orange-county";
-import { assets, type MediaAsset } from "@/content/assets";
+import type { MediaAsset } from "@/content/assets";
+import type { Estate } from "@/content/estates";
 import { blurFor } from "@/lib/media";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
-/** Order matches `facilities` in content. */
-const facilityMedia: MediaAsset[] = [assets.facilityGym, assets.facilityPitch, assets.facilityBasketballCourt, assets.facilityMart];
 
 /**
  * One of the TWO places cards are allowed (AGENTS.md rule 4). Every facility
  * has `body: null`, so the card is composed to work on image and label alone —
  * a tall frame with the label set into the image, not a text card with a hole.
  */
-export function Facilities() {
+export function Facilities({ estate }: { estate: Estate }) {
+  const facilities = estate.facilities;
+  const facilityMedia: MediaAsset[] = estate.media.facilities;
+  if (facilities.length === 0) return null;
   return (
     <InView as="section" id="facilities" aria-label="Facilities" className="bg-oc-paper-warm py-sec text-oc-ink" amount={0.08}>
       <Shell>

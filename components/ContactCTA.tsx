@@ -1,9 +1,10 @@
-import { contact } from "@/content/orange-county";
+import type { Estate } from "@/content/estates";
 import { telDisplay, telHref, whatsappAbout } from "@/lib/site";
 import { Action, Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
-export function ContactCTA() {
-  const inspection = whatsappAbout("booking an inspection");
+export function ContactCTA({ estate }: { estate: Estate }) {
+  const contact = estate.contact;
+  const inspection = whatsappAbout(estate, "booking an inspection");
 
   return (
     <InView as="section" id="contact" aria-label="Contact" className="relative isolate overflow-hidden bg-oc-orange py-sec-lg text-oc-ink" amount={0.12}>

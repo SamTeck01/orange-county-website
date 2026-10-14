@@ -1,12 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { features } from "@/content/orange-county";
-import { assets, type MediaAsset } from "@/content/assets";
+import type { MediaAsset } from "@/content/assets";
+import type { Estate } from "@/content/estates";
 import { blurFor } from "@/lib/media";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
-const featureMedia: MediaAsset[] = [assets.featureRoad, assets.featureSolar, assets.featureCctv, assets.featureGated];
 
 /**
  * Drawn coverage motif — the designed empty state for any feature whose
@@ -42,9 +41,9 @@ function CoverageMotif() {
   );
 }
 
-function FeatureCard({ index, total }: { index: number; total: number }) {
-  const feature = features[index];
-  const asset = featureMedia[index];
+function FeatureCard({ estate, index, total }: { estate: Estate; index: number; total: number }) {
+  const feature = estate.features[index];
+  const asset: MediaAsset | undefined = estate.media.features[index];
   const isLast = index === total - 1;
   const hasMedia = Boolean(asset?.src);
 
@@ -66,7 +65,7 @@ function FeatureCard({ index, total }: { index: number; total: number }) {
           inset. Desktop only: on a phone it is a second full-width decode per
           card AND a large blurred surface the compositor has to carry through
           every scroll frame. The ink field plus noise does the job there. */}
-      {hasMedia && asset.src ? (
+      {hasMedia && asset?.src ? (
         <div aria-hidden="true" className="absolute inset-0 -z-10 hidden scale-110 md:block">
           <Image src={asset.src} alt="" fill sizes="100vw" className="object-cover blur-[26px]" placeholder="blur" blurDataURL={blurFor(asset.src)} />
         </div>
@@ -94,7 +93,7 @@ function FeatureCard({ index, total }: { index: number; total: number }) {
           {/* Media column */}
           <div className="md:col-span-6 md:col-start-7 lg:col-span-6 lg:col-start-7">
             <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] md:h-full md:aspect-auto md:min-h-[18rem]">
-              {hasMedia && asset.src ? (
+              {hasMedia && asset?.src ? (
                 <>
                   <Image
                     src={asset.src}
@@ -119,7 +118,9 @@ function FeatureCard({ index, total }: { index: number; total: number }) {
   );
 }
 
-export function FeatureStory() {
+export function FeatureStory({ estate }: { estate: Estate }) {
+  const features = estate.features;
+  if (features.length === 0) return null;
   return (
     <InView as="section" id="features" aria-label="Estate features" className="bg-oc-paper py-sec text-oc-ink" amount={0.05}>
       <Shell>
@@ -132,7 +133,7 @@ export function FeatureStory() {
 
         <div className="mt-12 md:mt-20">
           {features.map((feature, index) => (
-            <FeatureCard key={feature.n} index={index} total={features.length} />
+            <FeatureCard key={feature.n} estate={estate} index={index} total={features.length} />
           ))}
         </div>
       </Shell>

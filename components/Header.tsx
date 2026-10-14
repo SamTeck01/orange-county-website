@@ -2,19 +2,23 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { contact } from "@/content/orange-county";
 import { assets } from "@/content/assets";
-import { estateName, telHref, whatsappHref } from "@/lib/site";
+import type { Estate } from "@/content/estates";
+import { telHref, whatsappHref as waHref } from "@/lib/site";
 
-const nav = [
-  { label: "The estate", href: "#positioning" },
-  { label: "Features", href: "#features" },
-  { label: "Location", href: "#location" },
-  { label: "Masterplan", href: "#masterplan" },
-  { label: "Pricing", href: "#pricing" },
-];
-
-export function Header() {
+export function Header({ estate }: { estate: Estate }) {
+  const nav = [
+    { label: "The estate", href: "#positioning", show: true },
+    { label: "Features", href: "#features", show: estate.features.length > 0 },
+    { label: "Location", href: "#location", show: true },
+    { label: "Gallery", href: "#gallery", show: estate.features.length === 0 },
+    { label: "Masterplan", href: "#masterplan", show: Boolean(estate.media.masterplan?.src) },
+    { label: "Pricing", href: "#pricing", show: estate.plots.length > 0 },
+  ].filter((item) => item.show);
+  const contact = estate.contact;
+  const whatsappHref = waHref(estate);
+  const estateName = estate.name;
+  const other = estate.slug === "oyo" ? "epe" : "oyo";
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -60,7 +64,10 @@ export function Header() {
       <div className="mx-auto flex max-w-shell items-center justify-between gap-6 px-gut py-3.5 md:py-4">
         <a href="#explore" className="flex items-center gap-2.5 font-serif text-lg leading-none tracking-tight md:text-xl">
           <Image src={assets.logo.src ?? ""} alt={assets.logo.alt} width={36} height={36} sizes="36px" className="h-8 w-8 object-contain md:h-9 md:w-9" />
-          {estateName}
+          <span className="flex flex-col">
+            {estateName}
+            <span className="mt-1 font-mono text-[0.5625rem] uppercase tracking-[0.16em] opacity-70">{estate.area}</span>
+          </span>
         </a>
 
         <nav aria-label="Sections" className="hidden items-center gap-8 lg:flex">
@@ -76,6 +83,12 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <a
+            href={`/${other}`}
+            className={`hidden min-h-11 items-center px-3 font-mono text-[0.6875rem] uppercase tracking-[0.12em] underline-offset-4 hover:underline md:inline-flex ${solid ? "text-oc-ink-soft" : "text-oc-paper/80"}`}
+          >
+            Switch to {other === "epe" ? "Epe" : "Oyo"}
+          </a>
           {whatsappHref ? (
             <a
               href={whatsappHref}
@@ -123,6 +136,9 @@ export function Header() {
                 {item.label}
               </a>
             ))}
+            <a href={`/${other}`} onClick={() => setOpen(false)} className="flex items-baseline gap-4 py-4 font-mono text-[0.75rem] uppercase tracking-[0.14em] text-oc-orange">
+              Switch to Orange County {other === "epe" ? "Epe" : "Oyo"} →
+            </a>
           </nav>
 
           <div className="grid grid-cols-2 gap-px border-t border-oc-paper/15 bg-oc-paper/15">

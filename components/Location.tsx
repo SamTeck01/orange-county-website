@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { location } from "@/content/orange-county";
-import { assets, landmarkImages } from "@/content/assets";
+import type { Estate } from "@/content/estates";
 import { blurFor } from "@/lib/media";
 import { Eyebrow, Heading, InView, Rule, Shell } from "@/components/primitives";
 
@@ -10,17 +9,19 @@ import { Eyebrow, Heading, InView, Rule, Shell } from "@/components/primitives";
  * URL the browser downloads the file once. A second copy of the path string is
  * the only thing that could break that, so there is deliberately only one.
  */
-function roadFootage() {
-  const entry = landmarkImages[0];
+function roadFootage(estate: Estate) {
+  const entry = estate.media.landmarkImages[0];
   const media = Array.isArray(entry) ? entry[0] : entry;
   return media?.videoSrc ? media : null;
 }
 
-export function Location() {
-  /* content.location.coordinates is null — there is no GPS point in the
-     brief, so this renders as a place, not as a map with a dropped pin. */
-  const area = location.area.replace(/\.$/, "");
-  const footage = roadFootage();
+export function Location({ estate }: { estate: Estate }) {
+  /* There is no GPS point in either brief, so this renders as a place,
+     not as a map with a dropped pin. */
+  const area = estate.area;
+  const location = { road: estate.road };
+  const footage = roadFootage(estate);
+  const locationMap = estate.media.locationMap;
 
   return (
     <InView as="section" id="location" aria-label="Location" className="overflow-hidden bg-oc-paper-warm py-sec text-oc-ink" amount={0.1}>
@@ -62,20 +63,20 @@ export function Location() {
             <span className="mx-auto block max-w-shell font-mono text-[0.625rem] uppercase tracking-[0.16em] text-oc-paper/85">{footage.alt}</span>
           </figcaption>
         </figure>
-      ) : assets.locationMap.src ? (
+      ) : locationMap?.src ? (
         <figure data-reveal style={{ "--i": 4 } as React.CSSProperties} className="relative mt-10 h-[48svh] w-full md:mt-16 md:h-[68svh]">
           <Image
-            src={assets.locationMap.src}
-            alt={assets.locationMap.alt}
+            src={locationMap.src}
+            alt={locationMap.alt}
             fill
             sizes="100vw"
             placeholder="blur"
-            blurDataURL={blurFor(assets.locationMap.src)}
+            blurDataURL={blurFor(locationMap.src)}
             className="object-cover"
-            style={{ objectPosition: assets.locationMap.focal }}
+            style={{ objectPosition: locationMap.focal }}
           />
           <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-oc-ink-deep/75 to-transparent px-gut pb-5 pt-16">
-            <span className="mx-auto block max-w-shell font-mono text-[0.625rem] uppercase tracking-[0.16em] text-oc-paper/85">{assets.locationMap.alt}</span>
+            <span className="mx-auto block max-w-shell font-mono text-[0.625rem] uppercase tracking-[0.16em] text-oc-paper/85">{locationMap.alt}</span>
           </figcaption>
         </figure>
       ) : null}

@@ -1,11 +1,10 @@
 import Image from "next/image";
-import { contact, developer } from "@/content/orange-county";
-import { assets } from "@/content/assets";
+import type { Estate } from "@/content/estates";
 import { blurFor } from "@/lib/media";
-import { estateName, locationLine, telDisplay, telHref } from "@/lib/site";
+import { locationLine, telDisplay, telHref } from "@/lib/site";
 import { Shell } from "@/components/primitives";
 
-const columns = [
+const allColumns = [
   {
     heading: "Estate",
     links: [
@@ -26,7 +25,22 @@ const columns = [
   },
 ];
 
-export function Footer() {
+export function Footer({ estate }: { estate: Estate }) {
+  const { contact, developer } = estate;
+  const estateName = estate.name;
+  const assets = { footerBg: estate.media.footerBg };
+  const present = new Set(
+    ["positioning", "process", "contact"]
+      .concat(estate.documentation.length || estate.landTitle.length ? ["documentation"] : [])
+      .concat(estate.features.length ? ["features"] : [])
+      .concat(estate.facilities.length ? ["facilities"] : [])
+      .concat(estate.plots.length ? ["pricing"] : [])
+      .concat(estate.payment ? ["payment"] : [])
+      .concat(estate.media.masterplan?.src ? ["masterplan"] : []),
+  );
+  const columns = allColumns
+    .map((column) => ({ ...column, links: column.links.filter((link) => present.has(link.href.slice(1))) }))
+    .concat([{ heading: "Estates", links: [{ label: "Orange County Oyo", href: "/oyo" }, { label: "Orange County Epe", href: "/epe" }] }]);
   const year = new Date().getFullYear();
 
   return (
@@ -38,9 +52,9 @@ export function Footer() {
 
       <Shell>
         <div className="grid grid-cols-1 gap-10 pb-14 md:grid-cols-12 md:gap-10 md:pb-20">
-          <div className="md:col-span-5">
+          <div className="md:col-span-3">
             <p className="font-serif text-h1 leading-[0.95]">{estateName}</p>
-            <p className="mt-4 font-mono text-[0.625rem] uppercase leading-relaxed tracking-[0.16em] text-oc-paper/55">{locationLine}</p>
+            <p className="mt-4 font-mono text-[0.625rem] uppercase leading-relaxed tracking-[0.16em] text-oc-paper/55">{locationLine(estate)}</p>
           </div>
 
           {columns.map((column) => (

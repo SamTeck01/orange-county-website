@@ -1,36 +1,25 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { developer } from "@/content/orange-county";
-import { assets } from "@/content/assets";
-import { entryPrice, estateName, locationLine, plotSizes } from "@/lib/site";
-import { StickyMobileCTA } from "@/components/StickyMobileCTA";
+import { oyo } from "@/content/estates";
 import { ScrollEffects } from "@/components/ScrollEffects";
 import { Analytics } from "@vercel/analytics/next";
 
-const description = `${estateName} is a residential estate in ${locationLine} by ${developer.name}. Plots of ${plotSizes} sqm from ${entryPrice.display}.`;
+const description = `Orange County residential estates by ${oyo.developer.name} — in Balogun, Oyo and Epe, Lagos.`;
 
 export const metadata: Metadata = {
   metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
-  title: {
-    default: `${estateName} — ${locationLine}`,
-    template: `%s — ${estateName}`,
-  },
+  title: { default: "Orange County — Oyo & Epe", template: "%s — Orange County" },
   description,
-  applicationName: estateName,
-  authors: [{ name: developer.name }],
-  keywords: ["Orange County estate", "land for sale Oyo", "Balogun Oyo", developer.name, "residential plots Nigeria"],
+  applicationName: "Orange County",
+  authors: [{ name: oyo.developer.name }],
+  keywords: ["Orange County estate", "land for sale Oyo", "Balogun Oyo", "land for sale Epe", "Epe Lagos", oyo.developer.name, "residential plots Nigeria"],
   openGraph: {
     type: "website",
-    title: `${estateName} — ${locationLine}`,
+    title: "Orange County — Oyo & Epe",
     description,
-    siteName: estateName,
+    siteName: "Orange County",
     locale: "en_NG",
-    images: assets.heroVideo.poster ? [{ url: assets.heroVideo.poster, width: 1600, height: 900, alt: assets.hero.alt }] : undefined,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${estateName} — ${locationLine}`,
-    description,
+    images: oyo.media.heroVideo.poster ? [{ url: oyo.media.heroVideo.poster, width: 1600, height: 900, alt: oyo.media.hero.alt }] : undefined,
   },
   robots: { index: true, follow: true },
 };
@@ -53,7 +42,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         <ScrollEffects />
         {children}
-        <StickyMobileCTA />
         <Analytics />
       </body>
     </html>

@@ -1,33 +1,30 @@
-import { contact, developer, landTitle, location, plots, positioning } from "@/content/orange-county";
+import type { Estate } from "@/content/estates";
 
-/**
- * The estate name is derived from the one place it is stated in content,
- * rather than retyped in six components.
- * "Orange County is an avant-garde residential estate…" → "Orange County"
- */
-export const estateName = positioning.body.slice(0, positioning.body.indexOf(" is "));
+/** "Balogun, Oyo — Off Iseyin Express" */
+export const locationLine = (estate: Estate) => `${estate.area} — ${estate.road}`;
 
-/** Cheapest plot, formatted. Never hardcode a price. */
-export const entryPrice = plots.reduce((low, plot) => (plot.price < low.price ? plot : low), plots[0]);
+/** Cheapest plot, or null when the estate has no published prices. */
+export function entryPrice(estate: Estate) {
+  if (estate.plots.length === 0) return null;
+  return estate.plots.reduce((low, plot) => (plot.price < low.price ? plot : low), estate.plots[0]);
+}
 
 /** "300 / 450 / 600" — sizes only, no invented ranges. */
-export const plotSizes = plots
-  .filter((plot) => /^\d/.test(plot.size))
-  .map((plot) => plot.size.replace(/sqm$/i, ""))
-  .join(" / ");
+export function plotSizes(estate: Estate) {
+  return estate.plots
+    .filter((plot) => /^\d/.test(plot.size))
+    .map((plot) => plot.size.replace(/sqm$/i, ""))
+    .join(" / ");
+}
 
-export const titleStatus = landTitle.items[0];
-export const surveyStatus = landTitle.items[1];
+export const whatsappHref = (estate: Estate) =>
+  estate.contact.whatsappPrimary ? `https://wa.me/${estate.contact.whatsappPrimary}` : null;
 
-export const whatsappHref = contact.whatsappPrimary
-  ? `https://wa.me/${contact.whatsappPrimary}`
-  : null;
-
-/** WhatsApp deep link with a prefilled first message. */
-export function whatsappAbout(subject: string): string | null {
-  if (!contact.whatsappPrimary) return null;
-  const message = `Hello ${developer.name}, I'd like to know more about ${subject} at ${estateName}.`;
-  return `https://wa.me/${contact.whatsappPrimary}?text=${encodeURIComponent(message)}`;
+/** WhatsApp deep link with a prefilled first message naming the branch. */
+export function whatsappAbout(estate: Estate, subject: string): string | null {
+  if (!estate.contact.whatsappPrimary) return null;
+  const message = `Hello ${estate.developer.name}, I'd like to know more about ${subject} at ${estate.name}, ${estate.area}.`;
+  return `https://wa.me/${estate.contact.whatsappPrimary}?text=${encodeURIComponent(message)}`;
 }
 
 /**
@@ -43,5 +40,3 @@ export function telDisplay(phone: string): string {
   const digits = phone.replace(/\D/g, "");
   return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7)}`.trim();
 }
-
-export const locationLine = `${location.area.replace(/\.$/, "")} — ${location.road}`;

@@ -1,4 +1,4 @@
-import { documentation, landTitle } from "@/content/orange-county";
+import type { Estate } from "@/content/estates";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
 /**
@@ -7,8 +7,11 @@ import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
  * document that does not yet exist. AGENTS.md rule 2: the items render
  * verbatim, and nothing here states that the C of O has been issued.
  */
-export function Documentation() {
-    return (
+export function Documentation({ estate }: { estate: Estate }) {
+  if (estate.documentation.length === 0 && estate.landTitle.length === 0) return null;
+  const documentation = { items: estate.documentation };
+  const landTitle = { items: estate.landTitle };
+  return (
     <InView as="section" id="documentation" aria-label="Documentation" className="relative isolate overflow-hidden bg-oc-ink-deep py-sec-lg text-oc-paper" amount={0.12}>
       <div aria-hidden="true" className="card-noise absolute inset-0 -z-10 opacity-50" />
 

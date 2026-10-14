@@ -1,16 +1,16 @@
 import Image from "next/image";
-import { contact, developer, payment } from "@/content/orange-county";
-import { assets } from "@/content/assets";
+import type { Estate } from "@/content/estates";
 import { blurFor } from "@/lib/media";
 import { telHref, whatsappAbout } from "@/lib/site";
 import { Action, Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
 /* Typed null in content today; typed loosely here so that the day the client
    sends the real steps, dropping them into content is the only change needed. */
-const steps = payment.steps as readonly string[] | null;
-
-export function PurchaseProcess() {
-  const enquire = whatsappAbout("the purchase process");
+export function PurchaseProcess({ estate }: { estate: Estate }) {
+  const { contact, developer } = estate;
+  const steps = estate.payment?.steps ?? null;
+  const assets = { purchaseBg: estate.media.purchaseBg };
+  const enquire = whatsappAbout(estate, "the purchase process");
   const phone = contact.phones[0];
 
   return (

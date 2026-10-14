@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { contact } from "@/content/orange-county";
-import { telHref, whatsappHref } from "@/lib/site";
+import type { Estate } from "@/content/estates";
+import { telHref, whatsappHref as waHref } from "@/lib/site";
 
 /**
  * Mobile primary (AGENTS.md rule 5). Hidden until the hero has scrolled past,
  * so it never covers the hero's own calls to action. Both targets are 56px.
  */
-export function StickyMobileCTA() {
+export function StickyMobileCTA({ estate }: { estate: Estate }) {
   const [visible, setVisible] = useState(false);
-  const phone = contact.phones[0];
+  const phone = estate.contact.phones[0];
+  const whatsappHref = waHref(estate);
 
   useEffect(() => {
     const hero = document.getElementById("explore");

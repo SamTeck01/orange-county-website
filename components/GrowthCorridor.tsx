@@ -1,11 +1,10 @@
-import { benefits } from "@/content/orange-county";
+import type { Estate } from "@/content/estates";
 import { Eyebrow, InView, Rule, Shell } from "@/components/primitives";
 
 /* The growth-corridor benefit, rendered once, here, as a typographic
    interstitial. It is deliberately excluded from InvestmentBenefits. */
-const corridor = benefits[3];
-
-export function GrowthCorridor() {
+export function GrowthCorridor({ estate }: { estate: Estate }) {
+  const corridor = estate.benefits[3];
   if (!corridor?.lead) return null;
 
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { payment } from "@/content/orange-county";
+import type { Estate } from "@/content/estates";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
 function CopyButton({ value, label }: { value: string; label: string }) {
@@ -28,7 +28,9 @@ function CopyButton({ value, label }: { value: string; label: string }) {
   );
 }
 
-export function PaymentDetails() {
+export function PaymentDetails({ estate }: { estate: Estate }) {
+  const payment = estate.payment;
+  if (!payment) return null;
   const rows: { label: string; value: string; copy?: boolean }[] = [
     { label: "Account name", value: payment.accountName },
     { label: "Bank", value: payment.bank },

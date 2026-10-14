@@ -1,4 +1,4 @@
-import { assets } from "@/content/assets";
+import type { Estate } from "@/content/estates";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 import { MasterplanViewer } from "@/components/MasterplanViewer";
 
@@ -7,8 +7,10 @@ import { MasterplanViewer } from "@/components/MasterplanViewer";
  * this site, and no plot on the masterplan is ever clickable — nothing here
  * may imply a specific plot is available.
  */
-export function Masterplan() {
+export function Masterplan({ estate }: { estate: Estate }) {
   const model: string | null = null;
+  const masterplan = estate.media.masterplan;
+  if (!masterplan?.src) return null;
 
   return (
     <InView as="section" id="masterplan" aria-label="Masterplan" className="relative isolate overflow-hidden bg-oc-ink-deep py-sec text-oc-paper" amount={0.08}>
@@ -26,7 +28,7 @@ export function Masterplan() {
         </div>
 
         <div data-reveal style={{ "--i": 4 } as React.CSSProperties} className="mt-10 md:mt-16">
-          <MasterplanViewer model={model} poster={assets.masterplan} />
+          <MasterplanViewer model={model} poster={masterplan} />
         </div>
       </Shell>
     </InView>

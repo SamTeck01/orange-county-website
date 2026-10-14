@@ -2,22 +2,26 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { positioning } from "@/content/orange-county";
-import { assets } from "@/content/assets";
+import type { Estate } from "@/content/estates";
 import { blurFor } from "@/lib/media";
-import { entryPrice, estateName, locationLine, plotSizes, surveyStatus, titleStatus, whatsappHref } from "@/lib/site";
+import { entryPrice, locationLine, plotSizes, whatsappHref } from "@/lib/site";
 import { Action } from "@/components/primitives";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 
-/** Facts only — every value here is read from content/orange-county.ts. */
-const rail = [
-  { label: "Plots from", value: entryPrice.display },
-  { label: "Sizes", value: `${plotSizes} sqm` },
-  { label: "Title", value: titleStatus },
-  { label: "Survey", value: surveyStatus },
-];
+/** Facts only — any fact the estate does not have is left off the rail. */
+function railFor(estate: Estate) {
+  const sizes = plotSizes(estate);
+  return [
+    { label: "Plots from", value: entryPrice(estate)?.display },
+    { label: "Sizes", value: sizes ? `${sizes} sqm` : undefined },
+    { label: "Title", value: estate.landTitle[0] },
+    { label: "Survey", value: estate.landTitle[1] },
+    { label: "Location", value: estate.road },
+  ].filter((item): item is { label: string; value: string } => Boolean(item.value));
+}
 
-function HeroMedia() {
+function HeroMedia({ estate }: { estate: Estate }) {
+  const assets = { hero: estate.media.hero, heroVideo: estate.media.heroVideo };
   const reduced = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [failed, setFailed] = useState(false);
@@ -62,16 +66,19 @@ function HeroMedia() {
   );
 }
 
-export function Hero() {
+export function Hero({ estate }: { estate: Estate }) {
+  const rail = railFor(estate);
+  const estateName = estate.name;
+  const wa = whatsappHref(estate);
   return (
     <>
     <section
       id="explore"
-      aria-label={`${estateName} — ${locationLine}`}
+      aria-label={`${estateName} — ${locationLine(estate)}`}
       className="relative isolate flex min-h-svh flex-col overflow-hidden bg-oc-ink-deep text-oc-paper [--hero-parallax:0%] [--hero-progress:0] [--hero-scale:1.04]"
     >
       <div className="hero-media z-0">
-        <HeroMedia />
+        <HeroMedia estate={estate} />
       </div>
       <div aria-hidden="true" className="hero-grade absolute inset-0 z-[1]" />
 
@@ -80,7 +87,7 @@ export function Hero() {
       <div className="is-in relative z-10 flex flex-1 items-end px-gut pb-6 pt-28 md:pb-10 md:pt-32">
         <div className="mx-auto w-full max-w-shell">
           <p className="mask mb-5 md:mb-7" style={{ "--i": 0 } as React.CSSProperties}>
-            <span className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-oc-paper/75">{locationLine}</span>
+            <span className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-oc-paper/75">{locationLine(estate)}</span>
           </p>
 
           <h1 className="max-w-[8ch] font-serif text-[clamp(3.6rem,17vw,7rem)] leading-[0.84] text-oc-paper md:max-w-none md:text-display">
@@ -95,7 +102,7 @@ export function Hero() {
           <div className="mt-6 flex items-start gap-3 md:mt-9 md:gap-5">
             <span aria-hidden="true" className="rule-draw mt-[0.85em] h-px w-10 shrink-0 origin-left bg-oc-orange md:w-16" style={{ "--i": 3 } as React.CSSProperties} />
             <p data-reveal style={{ "--i": 4 } as React.CSSProperties} className="max-w-[26ch] font-serif text-h2 italic leading-[1.05] text-oc-paper/95">
-              {positioning.tagline}
+              {estate.positioning.tagline}
             </p>
           </div>
 
@@ -103,8 +110,8 @@ export function Hero() {
             <Action href="#positioning" variant="primary" className="w-full sm:w-auto">
               Explore the estate
             </Action>
-            {whatsappHref ? (
-              <Action href={whatsappHref} variant="ghost-dark" className="w-full sm:w-auto">
+            {wa ? (
+              <Action href={wa} variant="ghost-dark" className="w-full sm:w-auto">
                 Talk to an agent
               </Action>
             ) : null}

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { assets } from "@/content/assets";
+import type { Estate } from "@/content/estates";
 import { blurFor } from "@/lib/media";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
@@ -11,9 +11,9 @@ import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
  * poster is clicked, so nothing downloads on page load — preload="none" alone
  * is not reliable across browsers.
  */
-function Film() {
+function Film({ estate }: { estate: Estate }) {
   const [playing, setPlaying] = useState(false);
-  const film = assets.film;
+  const film = estate.media.film;
   if (!film.src) return null;
 
   if (playing) {
@@ -58,7 +58,8 @@ function Film() {
   );
 }
 
-export function Gallery() {
+export function Gallery({ estate }: { estate: Estate }) {
+  const assets = { gallery: estate.media.gallery };
   return (
     <InView as="section" id="gallery" aria-label="Film and gallery" className="relative isolate overflow-hidden bg-oc-ink py-sec text-oc-paper" amount={0.08}>
       <div aria-hidden="true" className="card-noise absolute inset-0 -z-10 opacity-40" />
@@ -72,7 +73,7 @@ export function Gallery() {
         </div>
 
         <div data-reveal style={{ "--i": 3 } as React.CSSProperties} className="mt-10 aspect-[16/10] overflow-hidden rounded-[20px] md:mt-14 md:aspect-[16/9] md:rounded-[24px]">
-          <Film />
+          <Film estate={estate} />
         </div>
       </Shell>
 

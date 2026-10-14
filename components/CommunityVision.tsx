@@ -1,9 +1,10 @@
-import { communityVision } from "@/content/orange-county";
+import type { Estate } from "@/content/estates";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
-const leadLines = communityVision.lead.split("\n").map((line) => line.trim()).filter(Boolean);
-
-export function CommunityVision() {
+export function CommunityVision({ estate }: { estate: Estate }) {
+  const communityVision = estate.communityVision;
+  if (!communityVision) return null;
+  const leadLines = communityVision.lead.split("\n").map((line) => line.trim()).filter(Boolean);
   return (
     <InView as="section" id="vision" aria-label="Community vision" className="bg-oc-paper-warm py-sec-lg text-oc-ink" amount={0.12}>
       <Shell>

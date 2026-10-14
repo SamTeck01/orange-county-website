@@ -1,4 +1,4 @@
-import { plots } from "@/content/orange-county";
+import type { Estate } from "@/content/estates";
 import { whatsappAbout } from "@/lib/site";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
@@ -8,7 +8,9 @@ import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
  * "selling fast" badge, or a plot number — the site must never imply that a
  * specific plot is available.
  */
-export function PlotPricing() {
+export function PlotPricing({ estate }: { estate: Estate }) {
+  const plots = estate.plots;
+  if (plots.length === 0) return null;
   return (
     <InView as="section" id="pricing" aria-label="Plot pricing" className="bg-oc-paper py-sec text-oc-ink" amount={0.08}>
       <Shell>
@@ -21,7 +23,7 @@ export function PlotPricing() {
 
         <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-16 lg:grid-cols-4 lg:gap-5">
           {plots.map((plot, index) => {
-            const enquire = whatsappAbout(`the ${plot.size} plot`);
+            const enquire = whatsappAbout(estate, `the ${plot.size} plot`);
             return (
               <li key={plot.size} data-reveal style={{ "--i": index } as React.CSSProperties}>
                 <article className="group flex h-full flex-col rounded-[18px] border border-oc-line bg-oc-paper-warm p-6 transition-colors duration-500 hover:border-oc-orange md:p-7">

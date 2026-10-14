@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { landmarks } from "@/content/orange-county";
-import { landmarkImages, type MediaAsset } from "@/content/assets";
+import type { MediaAsset } from "@/content/assets";
+import type { Estate } from "@/content/estates";
 import { blurFor } from "@/lib/media";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
@@ -9,7 +9,10 @@ import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
  * Facilities and Plot Pricing — so this is an editorial list: hairline,
  * index, copy, photograph. The photographs are real, not renders.
  */
-export function Landmarks() {
+export function Landmarks({ estate }: { estate: Estate }) {
+  const landmarks = estate.landmarks;
+  const landmarkImages = estate.media.landmarkImages;
+  if (landmarks.length === 0) return null;
   return (
     <InView as="section" id="landmarks" aria-label="Nearby landmarks" className="bg-oc-paper py-sec text-oc-ink" amount={0.06}>
       <Shell>

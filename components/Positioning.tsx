@@ -1,17 +1,19 @@
 import Image from "next/image";
-import { developer, positioning } from "@/content/orange-county";
-import { assets } from "@/content/assets";
+import type { Estate } from "@/content/estates";
 import { blurFor } from "@/lib/media";
 import { Eyebrow, InView, Rule, Shell } from "@/components/primitives";
 
 /* The body is one sentence ending in an attribution. Split it so the
    attribution can be set as a credit line — the words are untouched. */
 const marker = " Developed by ";
-const cut = positioning.body.indexOf(marker);
-const statement = cut > -1 ? positioning.body.slice(0, cut).trim() : positioning.body;
-const credit = cut > -1 ? positioning.body.slice(cut).trim() : null;
 
-export function Positioning() {
+export function Positioning({ estate }: { estate: Estate }) {
+  const { body } = estate.positioning;
+  const cut = body.indexOf(marker);
+  const statement = (cut > -1 ? body.slice(0, cut) : body).trim().replace(/\.$/, "");
+  const credit = cut > -1 ? body.slice(cut).trim() : null;
+  const assets = { positioning: estate.media.positioning };
+  const developer = estate.developer;
   return (
     <InView as="section" id="positioning" aria-label="About the estate" className="bg-oc-paper py-sec-lg text-oc-ink" amount={0.12}>
       <Shell>
