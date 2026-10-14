@@ -148,9 +148,10 @@ export const epe: Estate = {
     features: [assets.featureGated, assets.featureCctv, assets.featureSolar, assets.featureRoad].map(unplaced),
     locationMap: null,
     // Real photographs from Wikimedia Commons, all CC0 (public domain).
-    // The airport is still under construction, so it has no photograph.
     landmarkImages: [
-      { src: null, alt: "" },
+      // Client-supplied stand-in: the airport is under construction, so this is
+      // labelled illustrative on the page rather than presented as the site.
+      { src: "/images/epe-landmark-airport.webp", alt: "Illustrative image of an airport terminal", caption: "Illustrative image" },
       { src: "/images/epe-landmark-yabatech.jpg", alt: "Photograph of Yaba College of Technology, Epe Campus" },
       { src: "/images/epe-landmark-augustine.jpg", alt: "Photograph of the entrance of Augustine University, Ilara-Epe" },
       { src: "/images/epe-landmark-lasued.jpg", alt: "Photograph of Lagos State University of Education, Epe Campus" },

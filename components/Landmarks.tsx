@@ -77,6 +77,11 @@ export function Landmarks({ estate }: { estate: Estate }) {
                           />
                         )
                       )}
+                      {photos[0]?.caption ? (
+                        <figcaption className="absolute bottom-3 left-3 bg-oc-ink-deep/75 px-2.5 py-1.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-oc-paper">
+                          {photos[0].caption}
+                        </figcaption>
+                      ) : null}
                     </figure>
                   ) : null}
                 </div>

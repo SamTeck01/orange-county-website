@@ -4,6 +4,8 @@ export type MediaAsset = {
   focal?: string;
   videoSrc?: string;
   poster?: string;
+  /** Visible label on the image, e.g. to mark an illustrative photo. */
+  caption?: string;
 };
 
 export type VideoAsset = {
