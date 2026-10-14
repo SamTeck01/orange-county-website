@@ -47,3 +47,6 @@ next-env.d.ts
 /public/orange-county-assets/
 *.skp
 "Orange County Images and video"/
+
+# graphify knowledge graph output
+graphify-out/
