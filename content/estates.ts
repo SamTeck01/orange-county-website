@@ -156,7 +156,15 @@ export const epe: Estate = {
       { src: "/images/epe-landmark-augustine.jpg", alt: "Photograph of the entrance of Augustine University, Ilara-Epe" },
       { src: "/images/epe-landmark-lasued.jpg", alt: "Photograph of Lagos State University of Education, Epe Campus" },
     ],
-    facilities: [],
+    // Reused Oyo renders, matched to each Epe amenity in order.
+    facilities: [
+      assets.facilityMart,
+      assets.facilityPitch,
+      { src: "/images/gallery-estate-aerial.webp", alt: "3D render of the estate from the air" },
+      assets.featureRoad,
+      assets.purchaseBg,
+      { src: "/images/gallery-masterplan-blocks.webp", alt: "3D render of the planned blocks" },
+    ].map(unplaced),
     gallery: assets.gallery.filter((shot) => !/masterplan/.test(shot.src ?? "")).map(unplaced),
     film: unplaced(assets.film),
     masterplan: null,

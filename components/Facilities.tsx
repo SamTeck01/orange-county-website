@@ -32,7 +32,7 @@ export function Facilities({ estate }: { estate: Estate }) {
           </Eyebrow>
         </div>
 
-        <ul className={`mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4 md:mt-16 lg:gap-5 ${hasImages ? "grid-cols-1 lg:grid-cols-4" : "grid-cols-2 lg:grid-cols-3"}`}>
+        <ul className={`mt-12 grid gap-3 sm:gap-4 md:mt-16 lg:gap-5 grid-cols-2 ${facilities.length % 3 === 0 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
           {facilities.map((facility, index) => {
             const media = facilityMedia[index];
             return (
