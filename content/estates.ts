@@ -147,7 +147,14 @@ export const epe: Estate = {
     positioning: unplaced(assets.positioning),
     features: [assets.featureGated, assets.featureCctv, assets.featureSolar, assets.featureRoad].map(unplaced),
     locationMap: null,
-    landmarkImages: [],
+    // Real photographs from Wikimedia Commons, all CC0 (public domain).
+    // The airport is still under construction, so it has no photograph.
+    landmarkImages: [
+      { src: null, alt: "" },
+      { src: "/images/epe-landmark-yabatech.jpg", alt: "Photograph of Yaba College of Technology, Epe Campus" },
+      { src: "/images/epe-landmark-augustine.jpg", alt: "Photograph of the entrance of Augustine University, Ilara-Epe" },
+      { src: "/images/epe-landmark-lasued.jpg", alt: "Photograph of Lagos State University of Education, Epe Campus" },
+    ],
     facilities: [],
     gallery: assets.gallery.filter((shot) => !/masterplan/.test(shot.src ?? "")).map(unplaced),
     film: unplaced(assets.film),
