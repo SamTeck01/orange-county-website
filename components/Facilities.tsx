@@ -14,27 +14,30 @@ export function Facilities({ estate }: { estate: Estate }) {
   const facilities = estate.facilities;
   const facilityMedia: MediaAsset[] = estate.media.facilities;
   if (facilities.length === 0) return null;
+  const hasImages = facilityMedia.some((media) => media?.src);
   return (
     <InView as="section" id="facilities" aria-label="Facilities" className="bg-oc-paper-warm py-sec text-oc-ink" amount={0.08}>
       <Shell>
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-10">
           <div>
             <Heading lines={["The shared", "amenities."]} size="h1" className="max-w-[14ch]" />
-            <p data-reveal style={{ "--i": 3 } as React.CSSProperties} className="mt-5 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-oc-ink-soft">
-              Shown as 3D renders
-            </p>
+            {hasImages ? (
+              <p data-reveal style={{ "--i": 3 } as React.CSSProperties} className="mt-5 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-oc-ink-soft">
+                Shown as 3D renders
+              </p>
+            ) : null}
           </div>
           <Eyebrow index={2} className="md:pb-3">
             Facilities
           </Eyebrow>
         </div>
 
-        <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-16 lg:grid-cols-4 lg:gap-5">
+        <ul className={`mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4 md:mt-16 lg:gap-5 ${hasImages ? "grid-cols-1 lg:grid-cols-4" : "grid-cols-2 lg:grid-cols-3"}`}>
           {facilities.map((facility, index) => {
             const media = facilityMedia[index];
             return (
               <li key={facility.title} data-reveal style={{ "--i": index } as React.CSSProperties}>
-                <article className="group relative isolate aspect-[4/5] overflow-hidden rounded-[18px] bg-oc-ink-deep text-oc-paper lg:aspect-[3/4]">
+                <article className={`group relative isolate overflow-hidden rounded-[18px] bg-oc-ink-deep text-oc-paper ${hasImages ? "aspect-[4/5] lg:aspect-[3/4]" : "aspect-[4/3] card-noise"}`}>
                   {media?.src ? (
                     <Image
                       src={media.src}

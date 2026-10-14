@@ -23,6 +23,8 @@ export type Estate = {
   landmarks: { title: string; body: string | null }[];
   facilities: { title: string; body: string | null }[];
   benefits: { title: string; lead: string | null; points: string[] }[];
+  /** One benefit pulled out as a full-width statement (GrowthCorridor). */
+  corridor: { title: string; lead: string } | null;
   communityVision: { lead: string; points: string[] } | null;
   plots: Plot[];
   payment: { accountName: string; bank: string; accountNumber: string; steps: readonly string[] | null } | null;
@@ -56,7 +58,9 @@ export const oyo: Estate = {
   features: oyoContent.features,
   landmarks: oyoContent.landmarks,
   facilities: oyoContent.facilities,
-  benefits: oyoContent.benefits,
+  // benefits[3] (growth corridor) is shown once, as its own interstitial.
+  benefits: oyoContent.benefits.filter((_, index) => index !== 3),
+  corridor: oyoContent.benefits[3].lead ? { title: oyoContent.benefits[3].title, lead: oyoContent.benefits[3].lead } : null,
   communityVision: oyoContent.communityVision,
   plots: oyoContent.plots,
   payment: oyoContent.payment,
@@ -94,26 +98,54 @@ export const epe: Estate = {
   name: "Orange County",
   area: "Epe, Lagos",
   road: "Off Epe / Ijebu Ode Expressway",
+  // Everything below is from the Epe launch flyers.
   positioning: {
     tagline: "Lagos called. We answered.",
-    body: "A premium land ownership opportunity in Epe.",
+    body: "A well planned estate designed for comfortable living and smart investment.",
   },
   documentation: [],
   landTitle: [],
-  features: [],
-  landmarks: [],
-  facilities: [],
-  benefits: [],
-  communityVision: null,
+  // The four features that have a matching render lead the stack.
+  features: [
+    { n: "01", title: "Gated Estate", body: null },
+    { n: "02", title: "CCTV Cameras", body: null },
+    { n: "03", title: "Solar Street Lights", body: null },
+    { n: "04", title: "Good Road Network", body: null },
+  ],
+  landmarks: [
+    { title: "Lekki-Epe International Airport", body: "25 mins" },
+    { title: "Yabatech Epe Campus", body: "15 mins" },
+    { title: "St. Augustine", body: "20 mins" },
+    { title: "LASUED Michael Otedola", body: "15 mins" },
+  ],
+  facilities: [
+    { title: "Facility Centres", body: null },
+    { title: "Recreational Spaces", body: null },
+    { title: "Green Environment", body: null },
+    { title: "Drainage System", body: null },
+    { title: "Reliable Water Supply", body: null },
+    { title: "Beautiful Layout", body: null },
+  ],
+  benefits: [
+    { title: "Great Investment Potential", lead: null, points: [] },
+    { title: "Ideal for Residential & Commercial Use", lead: null, points: ["Residential Plots", "Commercial Plots"] },
+    { title: "Peaceful Environment", lead: null, points: [] },
+    { title: "Secure & Accessible", lead: null, points: [] },
+    { title: "Prime Location", lead: null, points: [] },
+    { title: "High Growth Area", lead: null, points: [] },
+  ],
+  corridor: { title: "Easy Access. Greater Opportunities.", lead: "A new address in Epe. Strategically located off Epe/Ijebu Ode Expressway." },
+  communityVision: { lead: "More than land.\nA community built for tomorrow.", points: [] },
   plots: [],
   payment: null,
-  contact: oyoContent.contact,
+  // The Epe flyers list only the first two numbers.
+  contact: { ...oyoContent.contact, phones: oyoContent.contact.phones.slice(0, 2) },
   developer: oyoContent.developer,
   media: {
     hero: unplaced(assets.hero),
     heroVideo: unplaced(assets.heroVideo),
     positioning: unplaced(assets.positioning),
-    features: [],
+    features: [assets.featureGated, assets.featureCctv, assets.featureSolar, assets.featureRoad].map(unplaced),
     locationMap: null,
     landmarkImages: [],
     facilities: [],

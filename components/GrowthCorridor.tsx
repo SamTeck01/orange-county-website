@@ -4,7 +4,7 @@ import { Eyebrow, InView, Rule, Shell } from "@/components/primitives";
 /* The growth-corridor benefit, rendered once, here, as a typographic
    interstitial. It is deliberately excluded from InvestmentBenefits. */
 export function GrowthCorridor({ estate }: { estate: Estate }) {
-  const corridor = estate.benefits[3];
+  const corridor = estate.corridor;
   if (!corridor?.lead) return null;
 
   return (

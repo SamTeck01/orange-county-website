@@ -1,11 +1,8 @@
 import type { Estate } from "@/content/estates";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
-/* benefits[3] — "Strategic Growth Corridor Advantage" — is rendered by
-   GrowthCorridor as its own interstitial. Showing it twice was one of the
-   duplications in the previous build. */
 export function InvestmentBenefits({ estate }: { estate: Estate }) {
-  const shown = estate.benefits.filter((_, index) => index !== 3);
+  const shown = estate.benefits;
   if (shown.length === 0) return null;
   return (
     <InView as="section" id="benefits" aria-label="Investment benefits" className="bg-oc-paper py-sec text-oc-ink" amount={0.05}>

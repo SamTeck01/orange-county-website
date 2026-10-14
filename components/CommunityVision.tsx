@@ -14,6 +14,7 @@ export function CommunityVision({ estate }: { estate: Estate }) {
             <Heading lines={leadLines} size="h1" offset={1} className="mt-6 max-w-[18ch] leading-[1.0]" />
           </div>
 
+          {communityVision.points.length > 0 ? (
           <ol className="md:col-span-6 md:col-start-7 md:self-end">
             {communityVision.points.map((point, index) => (
               <li key={point} className="border-t border-oc-line py-5 last:border-b md:py-6">
@@ -28,6 +29,7 @@ export function CommunityVision({ estate }: { estate: Estate }) {
               </li>
             ))}
           </ol>
+          ) : null}
         </div>
       </Shell>
     </InView>
