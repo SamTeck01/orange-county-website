@@ -103,8 +103,9 @@ export const epe: Estate = {
     tagline: "Lagos called. We answered.",
     body: "A well planned estate designed for comfortable living and smart investment.",
   },
-  documentation: [],
-  landTitle: [],
+  // Same papers as Oyo until the client says otherwise.
+  documentation: oyoContent.documentation.items,
+  landTitle: oyoContent.landTitle.items,
   // The four features that have a matching render lead the stack.
   features: [
     { n: "01", title: "Gated Estate", body: null },
