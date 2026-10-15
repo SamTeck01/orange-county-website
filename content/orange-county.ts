@@ -81,7 +81,7 @@ export const plots = [
 ];
 
 export const payment = {
-  accountName: "Orange County by Pace Consult",
+  accountName: "Orange County by Pace Consults",
   bank: "Zenith Bank",
   accountNumber: "1311968377",
   steps: null,   // no documented purchase steps — render the designed empty state

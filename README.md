@@ -1,6 +1,6 @@
 # Orange County
 
-Marketing site for Orange County, a residential estate in Balogun, Oyo, developed by Pace Consult.
+Marketing site for Orange County, a residential estate in Balogun, Oyo, developed by Pace Consults.
 
 ## Where Things Live
 
