@@ -12,7 +12,7 @@ import { useReducedMotion } from "@/lib/useReducedMotion";
 function railFor(estate: Estate) {
   const sizes = plotSizes(estate);
   return [
-    { label: "Plots from", value: entryPrice(estate)?.display },
+    { label: estate.pricingNote ? "Pre-launch from" : "Plots from", value: entryPrice(estate)?.display },
     { label: "Sizes", value: sizes ? `${sizes} sqm` : undefined },
     { label: "Title", value: estate.landTitle[0] },
     { label: "Survey", value: estate.landTitle[1] },

@@ -16,9 +16,14 @@ export function PlotPricing({ estate }: { estate: Estate }) {
       <Shell>
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-10">
           <Heading lines={["Choose", "your plot."]} size="h1" className="max-w-[12ch]" />
-          <Eyebrow index={2} className="md:pb-3">
-            Plot Pricing
-          </Eyebrow>
+          <div className="md:pb-3 md:text-right">
+            <Eyebrow index={2}>Plot Pricing</Eyebrow>
+            {estate.pricingNote ? (
+              <p data-reveal style={{ "--i": 3 } as React.CSSProperties} className="mt-3 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-oc-orange-deep">
+                {estate.pricingNote}
+              </p>
+            ) : null}
+          </div>
         </div>
 
         <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-16 lg:grid-cols-4 lg:gap-5">

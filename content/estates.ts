@@ -27,6 +27,8 @@ export type Estate = {
   corridor: { title: string; lead: string } | null;
   communityVision: { lead: string; points: string[] } | null;
   plots: Plot[];
+  /** Shown beside the prices, e.g. "Pre-launch price". */
+  pricingNote: string | null;
   payment: { accountName: string; bank: string; accountNumber: string; steps: readonly string[] | null } | null;
   contact: typeof oyoContent.contact;
   developer: { name: string };
@@ -63,6 +65,7 @@ export const oyo: Estate = {
   corridor: oyoContent.benefits[3].lead ? { title: oyoContent.benefits[3].title, lead: oyoContent.benefits[3].lead } : null,
   communityVision: oyoContent.communityVision,
   plots: oyoContent.plots,
+  pricingNote: null,
   payment: oyoContent.payment,
   contact: oyoContent.contact,
   developer: oyoContent.developer,
@@ -98,21 +101,16 @@ export const epe: Estate = {
   name: "Orange County",
   area: "Epe, Lagos",
   road: "Off Epe / Ijebu Ode Expressway",
-  // Everything below is from the Epe launch flyers.
+  // From the Epe launch flyers and the Epe product paper.
   positioning: {
     tagline: "Lagos called. We answered.",
     body: "A well planned estate designed for comfortable living and smart investment.",
   },
-  // Same papers as Oyo until the client says otherwise.
+  // Papers as Oyo's. The Epe product paper lists the title as the Registered
+  // Survey Plan only — it does not carry "C of O in View".
   documentation: oyoContent.documentation.items,
-  landTitle: oyoContent.landTitle.items,
-  // The four features that have a matching render lead the stack.
-  features: [
-    { n: "01", title: "Gated Estate", body: null },
-    { n: "02", title: "CCTV Cameras", body: null },
-    { n: "03", title: "Solar Street Lights", body: null },
-    { n: "04", title: "Good Road Network", body: null },
-  ],
+  landTitle: ["Registered Survey Plan"],
+  features: oyoContent.features,
   landmarks: [
     { title: "Lekki-Epe International Airport", body: "25 mins" },
     { title: "Yabatech Epe Campus", body: "15 mins" },
@@ -120,33 +118,34 @@ export const epe: Estate = {
     { title: "LASUED Michael Otedola", body: "15 mins" },
   ],
   facilities: [
-    { title: "Facility Centres", body: null },
-    { title: "Recreational Spaces", body: null },
+    { title: "Gym Center", body: null },
+    { title: "Football Pitch", body: null },
+    { title: "Mini Mart", body: null },
     { title: "Green Environment", body: null },
     { title: "Drainage System", body: null },
     { title: "Reliable Water Supply", body: null },
-    { title: "Beautiful Layout", body: null },
   ],
-  benefits: [
-    { title: "Great Investment Potential", lead: null, points: [] },
-    { title: "Ideal for Residential & Commercial Use", lead: null, points: ["Residential Plots", "Commercial Plots"] },
-    { title: "Peaceful Environment", lead: null, points: [] },
-    { title: "Secure & Accessible", lead: null, points: [] },
-    { title: "Prime Location", lead: null, points: [] },
-    { title: "High Growth Area", lead: null, points: [] },
+  benefits: oyo.benefits,
+  corridor: {
+    title: oyoContent.benefits[3].title,
+    lead: "Strategically located in Epe, Lagos — an emerging location with strong growth potential and promising investment advantages.",
+  },
+  communityVision: oyoContent.communityVision,
+  plots: [
+    { size: "300sqm", price: 3000000, display: "₦3,000,000", availability: null },
+    { size: "450sqm", price: 4000000, display: "₦4,000,000", availability: null },
+    { size: "600sqm", price: 5500000, display: "₦5,500,000", availability: null },
   ],
-  corridor: { title: "Easy Access. Greater Opportunities.", lead: "A new address in Epe. Strategically located off Epe/Ijebu Ode Expressway." },
-  communityVision: { lead: "More than land.\nA community built for tomorrow.", points: [] },
-  plots: [],
-  payment: null,
-  // The Epe flyers list only the first two numbers.
-  contact: { ...oyoContent.contact, phones: oyoContent.contact.phones.slice(0, 2) },
+  pricingNote: "Pre-launch price",
+  // Same Zenith account as Oyo, per the Epe product paper.
+  payment: oyoContent.payment,
+  contact: oyoContent.contact,
   developer: oyoContent.developer,
   media: {
     hero: unplaced(assets.hero),
     heroVideo: unplaced(assets.heroVideo),
     positioning: unplaced(assets.positioning),
-    features: [assets.featureGated, assets.featureCctv, assets.featureSolar, assets.featureRoad].map(unplaced),
+    features: [assets.featureRoad, assets.featureSolar, assets.featureCctv, assets.featureGated].map(unplaced),
     locationMap: null,
     // Real photographs from Wikimedia Commons, all CC0 (public domain).
     landmarkImages: [
@@ -158,13 +157,15 @@ export const epe: Estate = {
       { src: "/images/epe-landmark-lasued.jpg", alt: "Photograph of Lagos State University of Education, Epe Campus" },
     ],
     // Reused Oyo renders, matched to each Epe amenity in order.
+    // The paper's gym, pitch and mini mart use their own renders; the rest reuse
+    // the closest Oyo render.
     facilities: [
-      assets.facilityMart,
+      assets.facilityGym,
       assets.facilityPitch,
+      assets.facilityMart,
       { src: "/images/gallery-estate-aerial.webp", alt: "3D render of the estate from the air" },
       assets.featureRoad,
       assets.purchaseBg,
-      { src: "/images/gallery-masterplan-blocks.webp", alt: "3D render of the planned blocks" },
     ].map(unplaced),
     gallery: assets.gallery.filter((shot) => !/masterplan/.test(shot.src ?? "")).map(unplaced),
     film: unplaced(assets.film),
