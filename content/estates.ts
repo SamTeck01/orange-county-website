@@ -145,10 +145,17 @@ export const epe: Estate = {
   contact: oyoContent.contact,
   developer: oyoContent.developer,
   media: {
-    hero: unplaced(assets.hero),
-    heroVideo: unplaced(assets.heroVideo),
-    positioning: unplaced(assets.positioning),
-    features: [assets.featureRoad, assets.featureSolar, assets.featureCctv, assets.featureGated].map(unplaced),
+    // Epe's own 3D renders (public/images/epe-*.webp, 2560px WebP from the 4K masters).
+    hero: { src: "/images/epe-gate-front.webp", alt: "3D render of the entrance gate at Orange County, Epe" },
+    // The Oyo flythrough shows Oyo's gate, so Epe shows its own still until the Epe film is ready.
+    heroVideo: { src: null, poster: null, label: "Aerial flythrough of Orange County, Epe" },
+    positioning: { src: "/images/epe-gate-angle.webp", alt: "3D render of the gate and gatehouse at Orange County, Epe" },
+    features: [
+      { src: "/images/epe-main-avenue.webp", alt: "3D render of the main avenue at Orange County, Epe" },
+      { src: "/images/epe-avenue-drone.webp", alt: "3D render of the street-lit roads between the plots at Orange County, Epe" },
+      { src: "/images/epe-entrance-drone.webp", alt: "3D render of the entrance and gatehouse at Orange County, Epe, seen from the air" },
+      { src: "/images/epe-gate-angle.webp", alt: "3D render of the gated entrance at Orange County, Epe" },
+    ],
     locationMap: null,
     // Real photographs from Wikimedia Commons, all CC0 (public domain).
     landmarkImages: [
@@ -159,24 +166,35 @@ export const epe: Estate = {
       { src: "/images/epe-landmark-augustine.jpg", alt: "Photograph of the entrance of Augustine University, Ilara-Epe" },
       { src: "/images/epe-landmark-lasued.jpg", alt: "Photograph of Lagos State University of Education, Epe Campus" },
     ],
-    // Reused Oyo renders, matched to each Epe amenity in order.
-    // The paper's gym, pitch and mini mart use their own renders; the rest reuse
-    // the closest Oyo render.
+    // Epe renders matched to each amenity in order.
     facilities: [
-      assets.facilityGym,
-      assets.facilityPitch,
-      assets.facilityMart,
-      { src: "/images/gallery-estate-aerial.webp", alt: "3D render of the estate from the air" },
-      assets.featureRoad,
-      assets.purchaseBg,
-    ].map(unplaced),
-    gallery: assets.gallery.filter((shot) => !/masterplan/.test(shot.src ?? "")).map(unplaced),
+      { src: "/images/epe-gym-supermart.webp", alt: "3D render of the gym at Orange County, Epe" },
+      { src: "/images/epe-pitch-pool.webp", alt: "3D render of the football pitch at Orange County, Epe" },
+      { src: "/images/epe-entrance-drone.webp", alt: "3D render of the mini mart beside the entrance at Orange County, Epe" },
+      { src: "/images/epe-estate-aerial.webp", alt: "3D render of the estate and its green surroundings at Orange County, Epe" },
+      { src: "/images/epe-main-avenue.webp", alt: "3D render of a drained, kerbed road at Orange County, Epe" },
+      { src: "/images/epe-west-aerial.webp", alt: "3D render of the plots at Orange County, Epe" },
+    ],
+    gallery: [
+      { src: "/images/epe-estate-aerial.webp", alt: "3D render of Orange County, Epe, from the air" },
+      { src: "/images/epe-gate-front.webp", alt: "3D render of the entrance gate at Orange County, Epe" },
+      { src: "/images/epe-gate-angle.webp", alt: "3D render of the gate and gatehouse at Orange County, Epe" },
+      { src: "/images/epe-entrance-drone.webp", alt: "3D render of the entrance at Orange County, Epe, from the air" },
+      { src: "/images/epe-gym-supermart.webp", alt: "3D render of the gym and supermart at Orange County, Epe" },
+      { src: "/images/epe-swimming-pool.webp", alt: "3D render of the swimming pool at Orange County, Epe" },
+      { src: "/images/epe-pitch-pool.webp", alt: "3D render of the football pitch and pool at Orange County, Epe" },
+      { src: "/images/epe-main-avenue.webp", alt: "3D render of the main avenue at Orange County, Epe" },
+      { src: "/images/epe-avenue-drone.webp", alt: "3D render of the main avenue and plots at Orange County, Epe, from the air" },
+      { src: "/images/epe-special-700.webp", alt: "3D render of the special 700 sqm plot at Orange County, Epe" },
+      { src: "/images/epe-west-aerial.webp", alt: "3D render of Blocks G, H and I at Orange County, Epe" },
+      { src: "/images/epe-front-aerial.webp", alt: "3D render of Orange County, Epe, from the expressway" },
+    ],
     film: unplaced(assets.film),
-    masterplan: null,
+    masterplan: { src: "/images/epe-estate-aerial.webp", alt: "3D render of the labelled masterplan at Orange County, Epe, showing Block A to Block I" },
     // Set to { src: "/models/epe-estate.glb", poster } once the web model is exported.
     model3d: null,
-    purchaseBg: unplaced(assets.purchaseBg),
-    footerBg: unplaced(assets.footerBg),
+    purchaseBg: { src: "/images/epe-front-aerial.webp", alt: "3D render of Orange County, Epe, from the expressway" },
+    footerBg: { src: "/images/epe-west-aerial.webp", alt: "3D render of Orange County, Epe, from the air" },
   },
 };
 

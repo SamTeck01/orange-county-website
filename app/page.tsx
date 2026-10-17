@@ -17,28 +17,28 @@ export default function Home() {
       ) : null}
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-oc-ink-deep/70" />
 
-      <section role="dialog" aria-modal="true" aria-labelledby="chooser-title" className="w-full max-w-3xl bg-oc-paper p-5 text-oc-ink sm:p-8 md:p-10">
+      <section role="dialog" aria-modal="true" aria-labelledby="chooser-title" className="w-full max-w-xl bg-oc-paper p-5 text-oc-ink sm:p-6 md:p-7">
         <div className="flex items-center gap-3">
           {assets.logo.src ? <Image src={assets.logo.src} alt={assets.logo.alt} width={40} height={40} className="h-10 w-10 object-contain" /> : null}
           <p className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-oc-ink-soft">{oyo.developer.name}</p>
         </div>
 
-        <h1 id="chooser-title" className="mt-6 font-serif text-h1 leading-[0.95]">
+        <h1 id="chooser-title" className="mt-4 font-serif text-[1.625rem] leading-[1.05] sm:text-[2rem]">
           Which Orange County
           <br />
           would you like to see?
         </h1>
 
-        <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-10 md:gap-4">
+        <ul className="mt-5 grid grid-cols-2 gap-3 md:mt-6">
           {estates.map((estate) => (
             <li key={estate.slug}>
-              <a href={`/${estate.slug}`} className="group relative isolate flex aspect-[4/3] items-end overflow-hidden bg-oc-ink-deep p-5 text-oc-paper focus-visible:outline-offset-4 sm:aspect-[4/5]">
+              <a href={`/${estate.slug}`} className="group relative isolate flex aspect-square items-end overflow-hidden bg-oc-ink-deep p-3 text-oc-paper focus-visible:outline-offset-4 sm:p-4">
                 {estate.media.hero.src ? (
                   <Image
                     src={estate.slug === "epe" ? (estate.media.positioning.src ?? estate.media.hero.src) : estate.media.hero.src}
                     alt=""
                     fill
-                    sizes="(min-width: 640px) 360px, 92vw"
+                    sizes="(min-width: 640px) 280px, 46vw"
                     placeholder="blur"
                     blurDataURL={blurFor(estate.media.hero.src)}
                     className="-z-20 object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -47,10 +47,10 @@ export default function Home() {
                 <span aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-oc-ink-deep/90 via-oc-ink-deep/30 to-transparent" />
                 <span className="flex w-full items-end justify-between gap-4">
                   <span>
-                    <span className="block font-serif text-h2 leading-none">Orange County {estate.label}</span>
+                    <span className="block font-serif text-[1.125rem] leading-none sm:text-[1.375rem]">Orange County {estate.label}</span>
                     <span className="mt-2 block font-mono text-[0.625rem] uppercase tracking-[0.16em] text-oc-paper/75">{estate.area}</span>
                   </span>
-                  <span aria-hidden="true" className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-oc-orange text-oc-ink transition-transform duration-500 group-hover:translate-x-1">
+                  <span aria-hidden="true" className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full bg-oc-orange sm:inline-flex text-oc-ink transition-transform duration-500 group-hover:translate-x-1">
                     →
                   </span>
                 </span>
