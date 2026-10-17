@@ -43,7 +43,7 @@ export function EstateModelViewer({ src, poster }: { src: string; poster: MediaA
 
       const scene = new THREE.Scene();
       scene.background = new THREE.Color("#bcd3e6");
-      scene.fog = new THREE.Fog("#bcd3e6", 600, 1400);
+      scene.fog = new THREE.Fog("#bcd3e6", 380, 900);
       scene.add(new THREE.HemisphereLight("#eaf2ff", "#3d4a2a", 1.6));
       const sun = new THREE.DirectionalLight("#fff4e2", 2.4);
       sun.position.set(-160, 220, 260);
@@ -75,13 +75,18 @@ export function EstateModelViewer({ src, poster }: { src: string; poster: MediaA
         }
       });
       scene.add(gltf.scene);
+      // Wide field under the model so its edge melts into the fog.
+      const field = new THREE.Mesh(new THREE.PlaneGeometry(4000, 4000), new THREE.MeshStandardMaterial({ color: "#1d3010", roughness: 1 }));
+      field.rotation.x = -Math.PI / 2;
+      field.position.set(85, -0.2, -140);
+      field.receiveShadow = true;
+      scene.add(field);
 
-      const box = new THREE.Box3().setFromObject(gltf.scene);
-      const centre = box.getCenter(new THREE.Vector3());
-      const size = box.getSize(new THREE.Vector3()).length();
+      // Model is in metres, Y-up; the estate is centred near (85, 0, -140).
+      const centre = new THREE.Vector3(85, 0, -140);
       const home = () => {
         controls.target.copy(centre);
-        camera.position.set(centre.x + size * 0.32, centre.y + size * 0.3, centre.z + size * 0.42);
+        camera.position.set(215, 165, 60);
         controls.autoRotate = true;
         controls.update();
       };

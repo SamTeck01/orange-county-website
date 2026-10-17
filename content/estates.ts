@@ -191,8 +191,11 @@ export const epe: Estate = {
     ],
     film: unplaced(assets.film),
     masterplan: { src: "/images/epe-estate-aerial.webp", alt: "3D render of the labelled masterplan at Orange County, Epe, showing Block A to Block I" },
-    // Set to { src: "/models/epe-estate.glb", poster } once the web model is exported.
-    model3d: null,
+    // Simplified web export of the render scene (no people, far trees or cars).
+    model3d: {
+      src: "/models/epe-estate.glb",
+      poster: { src: "/images/epe-3d-poster.webp", alt: "3D render of Orange County, Epe, seen from the air" },
+    },
     purchaseBg: { src: "/images/epe-front-aerial.webp", alt: "3D render of Orange County, Epe, from the expressway" },
     footerBg: { src: "/images/epe-west-aerial.webp", alt: "3D render of Orange County, Epe, from the air" },
   },
