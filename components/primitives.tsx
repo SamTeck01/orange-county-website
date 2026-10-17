@@ -15,7 +15,8 @@ type InViewProps = {
   amount?: number;
 } & HTMLAttributes<HTMLElement>;
 
-export function InView({ as: Tag = "div", children, amount = 0.15, ...rest }: InViewProps) {
+export function InView({ as: Tag = "div", children, amount: _amount, ...rest }: InViewProps) {
+  void _amount; // kept for callers; every section now reveals just before it enters
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -31,11 +32,12 @@ export function InView({ as: Tag = "div", children, amount = 0.15, ...rest }: In
         node.classList.add("is-in");
         observer.disconnect();
       },
-      { threshold: amount, rootMargin: "0px 0px -8% 0px" },
+      // Fire just before the section scrolls in, so content is already there when it arrives (no blank screens).
+      { threshold: 0, rootMargin: "0px 0px 20% 0px" },
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [amount]);
+  }, []);
 
   return (
     <Tag ref={ref} {...rest}>

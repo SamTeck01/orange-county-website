@@ -105,11 +105,11 @@ button {
 
 [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 18px, 0);
+  transform: translate3d(0, 12px, 0);
   transition:
-    opacity 800ms var(--ease-out),
-    transform 800ms var(--ease-out);
-  transition-delay: calc(var(--i, 0) * 70ms);
+    opacity 450ms var(--ease-out),
+    transform 450ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 40ms);
 }
 .is-in [data-reveal] {
   opacity: 1;
@@ -126,8 +126,8 @@ button {
 .mask > span {
   display: block;
   transform: translate3d(0, 105%, 0);
-  transition: transform 1000ms var(--ease-out);
-  transition-delay: calc(var(--i, 0) * 85ms);
+  transition: transform 550ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 45ms);
 }
 .is-in .mask > span {
   transform: translate3d(0, 0, 0);
