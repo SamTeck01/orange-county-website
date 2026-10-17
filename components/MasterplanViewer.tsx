@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { MediaAsset } from "@/content/assets";
 import { blurFor } from "@/lib/media";
 
@@ -59,8 +60,9 @@ export function MasterplanViewer({ model, poster }: { model: MasterplanModel; po
         </span>
       </button>
 
-      {open ? (
-        <div role="dialog" aria-modal="true" aria-label="Masterplan" className="fixed inset-0 z-[60] flex flex-col bg-oc-ink-deep/97">
+      {/* Portalled to <body>: the section's `isolate` and reveal transform would otherwise trap it inside the card. */}
+      {open ? createPortal(
+        <div role="dialog" aria-modal="true" aria-label="Masterplan" className="fixed inset-0 z-[100] flex flex-col bg-oc-ink-deep/97">
           <div className="flex items-center justify-between px-gut py-4">
             <p className="max-w-[60ch] font-mono text-[0.625rem] uppercase leading-relaxed tracking-[0.16em] text-oc-paper/65">Masterplan</p>
             <button ref={closeRef} type="button" onClick={() => setOpen(false)} aria-label="Close masterplan" className="inline-flex h-11 w-11 items-center justify-center font-mono text-2xl leading-none text-oc-paper">
@@ -70,7 +72,8 @@ export function MasterplanViewer({ model, poster }: { model: MasterplanModel; po
           <div className="relative flex-1">
             <Image src={poster.src} alt={poster.alt} fill sizes="96vw" placeholder="blur" blurDataURL={blurFor(poster.src)} className="object-contain p-3 md:p-8" />
           </div>
-        </div>
+        </div>,
+        document.body,
       ) : null}
 
       {/* Reserved for a future orbit viewer. The model is intentionally null. */}
