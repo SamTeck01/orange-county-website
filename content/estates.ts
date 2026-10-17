@@ -43,6 +43,8 @@ export type Estate = {
     gallery: MediaAsset[];
     film: VideoAsset;
     masterplan: MediaAsset | null;
+    /** Interactive 3D model of the estate (glTF binary) and the still shown before it loads. */
+    model3d: { src: string; poster: MediaAsset } | null;
     purchaseBg: MediaAsset;
     footerBg: MediaAsset;
   };
@@ -80,6 +82,7 @@ export const oyo: Estate = {
     gallery: assets.gallery,
     film: assets.film,
     masterplan: assets.masterplan,
+    model3d: null,
     purchaseBg: assets.purchaseBg,
     footerBg: assets.footerBg,
   },
@@ -170,6 +173,8 @@ export const epe: Estate = {
     gallery: assets.gallery.filter((shot) => !/masterplan/.test(shot.src ?? "")).map(unplaced),
     film: unplaced(assets.film),
     masterplan: null,
+    // Set to { src: "/models/epe-estate.glb", poster } once the web model is exported.
+    model3d: null,
     purchaseBg: unplaced(assets.purchaseBg),
     footerBg: unplaced(assets.footerBg),
   },

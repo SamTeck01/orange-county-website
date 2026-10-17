@@ -10,6 +10,7 @@ import { Location } from "@/components/Location";
 import { Landmarks } from "@/components/Landmarks";
 import { Facilities } from "@/components/Facilities";
 import { Gallery } from "@/components/Gallery";
+import { Explore3D } from "@/components/Explore3D";
 import { InvestmentBenefits } from "@/components/InvestmentBenefits";
 import { GrowthCorridor } from "@/components/GrowthCorridor";
 import { CommunityVision } from "@/components/CommunityVision";
@@ -62,6 +63,7 @@ export function EstatePage({ estate }: { estate: Estate }) {
         <Landmarks estate={estate} />
         <Facilities estate={estate} />
         <Gallery estate={estate} />
+        <Explore3D estate={estate} />
         <InvestmentBenefits estate={estate} />
         <GrowthCorridor estate={estate} />
         <CommunityVision estate={estate} />
