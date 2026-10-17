@@ -28,6 +28,8 @@ export function EstateModelViewer({ src, poster }: { src: string; poster: MediaA
       const THREE = await import("three");
       const { OrbitControls } = await import("three/examples/jsm/controls/OrbitControls.js");
       const { GLTFLoader } = await import("three/examples/jsm/loaders/GLTFLoader.js");
+      // The model is meshopt-compressed (gltfpack): 1.4MB instead of 10MB.
+      const { MeshoptDecoder } = await import("three/examples/jsm/libs/meshopt_decoder.module.js");
       if (disposed) return;
 
       const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -63,7 +65,7 @@ export function EstateModelViewer({ src, poster }: { src: string; poster: MediaA
       controls.autoRotateSpeed = 0.5;
       controls.addEventListener("start", () => (controls.autoRotate = false));
 
-      const gltf = await new GLTFLoader().loadAsync(src, (event) => {
+      const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(src, (event) => {
         if (event.total) setProgress(Math.round((event.loaded / event.total) * 100));
       });
       if (disposed) return;
