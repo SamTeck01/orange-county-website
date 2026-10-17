@@ -11,25 +11,25 @@ export default function Home() {
   const backdrop = oyo.media.hero;
 
   return (
-    <main id="main-content" className="relative isolate flex min-h-svh items-center justify-center overflow-hidden bg-oc-ink-deep px-4 py-10 text-oc-paper">
+    <main id="main-content" className="relative isolate flex h-svh items-center justify-center overflow-hidden bg-oc-ink-deep px-4 py-4 text-oc-paper">
       {backdrop.src ? (
         <Image src={backdrop.src} alt="" fill priority sizes="100vw" placeholder="blur" blurDataURL={blurFor(backdrop.src)} className="-z-20 scale-105 object-cover blur-[6px]" />
       ) : null}
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-oc-ink-deep/70" />
 
-      <section role="dialog" aria-modal="true" aria-labelledby="chooser-title" className="w-full max-w-xl bg-oc-paper p-5 text-oc-ink sm:p-6 md:p-7">
+      <section role="dialog" aria-modal="true" aria-labelledby="chooser-title" className="w-full max-w-md bg-oc-paper p-4 text-oc-ink sm:p-5">
         <div className="flex items-center gap-3">
-          {assets.logo.src ? <Image src={assets.logo.src} alt={assets.logo.alt} width={40} height={40} className="h-10 w-10 object-contain" /> : null}
+          {assets.logo.src ? <Image src={assets.logo.src} alt={assets.logo.alt} width={32} height={32} className="h-8 w-8 object-contain" /> : null}
           <p className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-oc-ink-soft">{oyo.developer.name}</p>
         </div>
 
-        <h1 id="chooser-title" className="mt-4 font-serif text-[1.625rem] leading-[1.05] sm:text-[2rem]">
+        <h1 id="chooser-title" className="mt-3 font-serif text-[1.375rem] leading-[1.1] sm:text-[1.625rem]">
           Which Orange County
           <br />
           would you like to see?
         </h1>
 
-        <ul className="mt-5 grid grid-cols-2 gap-3 md:mt-6">
+        <ul className="mt-4 grid grid-cols-2 gap-3">
           {estates.map((estate) => (
             <li key={estate.slug}>
               <a href={`/${estate.slug}`} className="group relative isolate flex aspect-square items-end overflow-hidden bg-oc-ink-deep p-3 text-oc-paper focus-visible:outline-offset-4 sm:p-4">
