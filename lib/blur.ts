@@ -33,7 +33,7 @@ export const TONE: Record<string, string> = {
   "epe-avenue-drone": "#737b5d",
   "epe-entrance-drone": "#65694b",
   "epe-estate-aerial": "#585c3a",
-  "epe-front-aerial": "#686c52",
+  "epe-front-aerial": "#606241",
   "epe-gate-angle": "#7c7f78",
   "epe-gate-front": "#757c79",
   "epe-gym-supermart": "#797c7e",
@@ -51,4 +51,7 @@ export const TONE: Record<string, string> = {
   "epe-facility-pitch": "#5b604c",
   "epe-facility-drainage": "#767b7c",
   "epe-commercial-plots": "#7d7f75",
+  "epe-aerial-clean": "#585c3a",
+  "epe-dusk-aerial": "#37372c",
+  "epe-street-lights": "#646969",
 };
