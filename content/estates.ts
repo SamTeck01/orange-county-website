@@ -191,6 +191,7 @@ export const epe: Estate = {
       { src: "/images/epe-commercial-plots.webp", alt: "3D render of the commercial plots facing the expressway at Orange County, Epe" },
       { src: "/images/epe-feature-cctv.webp", alt: "3D render of CCTV on the gatehouse at Orange County, Epe" },
       { src: "/images/epe-street-lights.webp", alt: "3D render of solar street lights along the entrance road at Orange County, Epe" },
+      { src: "/images/epe-gatehouse-lights.webp", alt: "3D render of the gatehouse, its CCTV and the street lights at Orange County, Epe" },
       { src: "/images/epe-dusk-aerial.webp", alt: "3D render of Orange County, Epe, from the air at dusk" },
     ],
     film: unplaced(assets.film),
