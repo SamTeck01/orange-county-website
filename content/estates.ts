@@ -151,9 +151,9 @@ export const epe: Estate = {
     heroVideo: { src: null, poster: null, label: "Aerial flythrough of Orange County, Epe" },
     positioning: { src: "/images/epe-gate-angle.webp", alt: "3D render of the gate and gatehouse at Orange County, Epe" },
     features: [
-      { src: "/images/epe-main-avenue.webp", alt: "3D render of the main avenue at Orange County, Epe" },
-      { src: "/images/epe-avenue-drone.webp", alt: "3D render of the street-lit roads between the plots at Orange County, Epe" },
-      { src: "/images/epe-entrance-drone.webp", alt: "3D render of the entrance and gatehouse at Orange County, Epe, seen from the air" },
+      { src: "/images/epe-feature-road.webp", alt: "3D render of a paved road inside Orange County, Epe" },
+      { src: "/images/epe-feature-solar.webp", alt: "3D render of a solar street light at Orange County, Epe" },
+      { src: "/images/epe-feature-cctv.webp", alt: "3D render of a CCTV camera on the gatehouse at Orange County, Epe" },
       { src: "/images/epe-gate-angle.webp", alt: "3D render of the gated entrance at Orange County, Epe" },
     ],
     locationMap: null,
@@ -168,11 +168,11 @@ export const epe: Estate = {
     ],
     // Epe renders matched to each amenity in order.
     facilities: [
-      { src: "/images/epe-gym-supermart.webp", alt: "3D render of the gym at Orange County, Epe" },
-      { src: "/images/epe-pitch-pool.webp", alt: "3D render of the football pitch at Orange County, Epe" },
-      { src: "/images/epe-entrance-drone.webp", alt: "3D render of the mini mart beside the entrance at Orange County, Epe" },
+      { src: "/images/epe-facility-gym.webp", alt: "3D render of the gym at Orange County, Epe" },
+      { src: "/images/epe-facility-pitch.webp", alt: "3D render of the football pitch at Orange County, Epe" },
+      { src: "/images/epe-gym-supermart.webp", alt: "3D render of the supermart at Orange County, Epe" },
       { src: "/images/epe-estate-aerial.webp", alt: "3D render of the estate and its green surroundings at Orange County, Epe" },
-      { src: "/images/epe-main-avenue.webp", alt: "3D render of a drained, kerbed road at Orange County, Epe" },
+      { src: "/images/epe-facility-drainage.webp", alt: "3D render of a kerbed, drained road at Orange County, Epe" },
       { src: "/images/epe-west-aerial.webp", alt: "3D render of the plots at Orange County, Epe" },
     ],
     gallery: [
@@ -188,6 +188,8 @@ export const epe: Estate = {
       { src: "/images/epe-special-700.webp", alt: "3D render of the special 700 sqm plot at Orange County, Epe" },
       { src: "/images/epe-west-aerial.webp", alt: "3D render of Blocks G, H and I at Orange County, Epe" },
       { src: "/images/epe-front-aerial.webp", alt: "3D render of Orange County, Epe, from the expressway" },
+      { src: "/images/epe-commercial-plots.webp", alt: "3D render of the commercial plots facing the expressway at Orange County, Epe" },
+      { src: "/images/epe-feature-cctv.webp", alt: "3D render of CCTV on the gatehouse at Orange County, Epe" },
     ],
     film: unplaced(assets.film),
     masterplan: { src: "/images/epe-estate-aerial.webp", alt: "3D render of the labelled masterplan at Orange County, Epe, showing Block A to Block I" },

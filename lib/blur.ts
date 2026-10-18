@@ -44,4 +44,11 @@ export const TONE: Record<string, string> = {
   "epe-swimming-pool": "#6b7774",
   "epe-west-aerial": "#687051",
   "epe-3d-poster": "#5f6449",
+  "epe-feature-cctv": "#53534c",
+  "epe-feature-solar": "#68859b",
+  "epe-feature-road": "#707877",
+  "epe-facility-gym": "#888a7b",
+  "epe-facility-pitch": "#5b604c",
+  "epe-facility-drainage": "#767b7c",
+  "epe-commercial-plots": "#7d7f75",
 };
