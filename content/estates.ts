@@ -147,8 +147,8 @@ export const epe: Estate = {
   media: {
     // Epe's own 3D renders (public/images/epe-*.webp, 2560px WebP from the 4K masters).
     hero: { src: "/images/epe-gate-front.webp", alt: "3D render of the entrance gate at Orange County, Epe" },
-    // The Oyo flythrough shows Oyo's gate, so Epe shows its own still until the Epe film is ready.
-    heroVideo: { src: null, poster: null, label: "Aerial flythrough of Orange County, Epe" },
+    // Epe's own 3D flythrough (960x540, 32 s, no audio), rendered from the same scene as the stills.
+    heroVideo: { src: "/video/epe-flythrough.mp4", poster: "/images/epe-flythrough-poster.jpg", label: "Aerial flythrough of Orange County, Epe" },
     positioning: { src: "/images/epe-gate-angle.webp", alt: "3D render of the gate and gatehouse at Orange County, Epe" },
     features: [
       { src: "/images/epe-feature-road.webp", alt: "3D render of a paved road inside Orange County, Epe" },
