@@ -88,16 +88,6 @@ export const oyo: Estate = {
   },
 };
 
-/* Epe reuses the Oyo 3D renders and films (client instruction). Their alt text
-   names Balogun, so it is restated without a place. Real photographs of Oyo
-   (location street, landmarks) and the Oyo masterplan are NOT reused: they
-   show a different site. */
-const unplaced = <T extends { alt?: string; label?: string }>(asset: T): T => ({
-  ...asset,
-  ...(asset.alt !== undefined ? { alt: asset.alt.replace(/ at Orange County, Balogun, Oyo/, "") } : {}),
-  ...(asset.label !== undefined ? { label: asset.label.replace(/ of Orange County, Balogun, Oyo/, "") } : {}),
-});
-
 export const epe: Estate = {
   slug: "epe",
   label: "Epe",
@@ -194,7 +184,8 @@ export const epe: Estate = {
       { src: "/images/epe-gatehouse-lights.webp", alt: "3D render of the gatehouse, its CCTV and the street lights at Orange County, Epe" },
       { src: "/images/epe-dusk-aerial.webp", alt: "3D render of Orange County, Epe, from the air at dusk" },
     ],
-    film: unplaced(assets.film),
+    // Epe film pending; the Oyo film shows a different site, so the slot stays empty until then.
+    film: { src: null, poster: null, label: "Film of Orange County, Epe" },
     masterplan: { src: "/images/epe-estate-aerial.webp", alt: "3D render of the labelled masterplan at Orange County, Epe, showing Block A to Block I" },
     // Simplified web export of the render scene (no people, far trees or cars).
     model3d: {
