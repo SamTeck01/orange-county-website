@@ -1,5 +1,6 @@
 import type { Estate } from "@/content/estates";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
+import { LetterViewer } from "@/components/LetterViewer";
 
 /**
  * No photograph ships with this section on purpose. The only available image
@@ -54,6 +55,10 @@ export function Documentation({ estate }: { estate: Estate }) {
             </ol>
           </div>
         </div>
+
+        {estate.letters.map((letter) => (
+          <LetterViewer key={letter.reference} letter={letter} />
+        ))}
       </Shell>
     </InView>
   );

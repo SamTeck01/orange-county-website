@@ -61,7 +61,7 @@ function Film({ estate }: { estate: Estate }) {
 }
 
 /** Full-screen viewer for one gallery image: arrows, swipe, Esc to close. */
-function Lightbox({ shots, index, onIndex, onClose }: { shots: MediaAsset[]; index: number; onIndex: (i: number) => void; onClose: () => void }) {
+export function Lightbox({ shots, index, onIndex, onClose, label = "Gallery" }: { shots: MediaAsset[]; index: number; onIndex: (i: number) => void; onClose: () => void; label?: string }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const touchX = useRef<number | null>(null);
   const count = shots.length;
@@ -90,12 +90,12 @@ function Lightbox({ shots, index, onIndex, onClose }: { shots: MediaAsset[]; ind
 
   // Portalled to <body>: the section's `isolate` would otherwise trap it under the header.
   return createPortal(
-    <div role="dialog" aria-modal="true" aria-label="Gallery" className="fixed inset-0 z-[100] flex flex-col bg-oc-ink-deep/97 text-oc-paper">
+    <div role="dialog" aria-modal="true" aria-label={label} className="fixed inset-0 z-[100] flex flex-col bg-oc-ink-deep/97 text-oc-paper">
       <div className="flex items-center justify-between px-gut py-3">
         <p className="font-mono text-[0.625rem] uppercase tracking-[0.16em] text-oc-paper/65" aria-live="polite">
-          {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+          {count > 1 ? `${String(index + 1).padStart(2, "0")} / ${String(count).padStart(2, "0")}` : label}
         </p>
-        <button ref={closeRef} type="button" onClick={onClose} aria-label="Close gallery" className="inline-flex h-11 w-11 items-center justify-center font-mono text-2xl leading-none text-oc-paper">
+        <button ref={closeRef} type="button" onClick={onClose} aria-label={`Close ${label.toLowerCase()}`} className="inline-flex h-11 w-11 items-center justify-center font-mono text-2xl leading-none text-oc-paper">
           ×
         </button>
       </div>

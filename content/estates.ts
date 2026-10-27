@@ -19,6 +19,8 @@ export type Estate = {
   positioning: { tagline: string; body: string };
   documentation: string[];
   landTitle: string[];
+  /** Official letters shown with the papers. Text is quoted from the letter, never paraphrased. */
+  letters: { issuer: string; subject: string; finding: string; reference: string; date: string; image: MediaAsset; pdf: string }[];
   features: { n: string; title: string; body: string | null }[];
   landmarks: { title: string; body: string | null }[];
   facilities: { title: string; body: string | null }[];
@@ -59,6 +61,7 @@ export const oyo: Estate = {
   positioning: oyoContent.positioning,
   documentation: oyoContent.documentation.items,
   landTitle: oyoContent.landTitle.items,
+  letters: [],
   features: oyoContent.features,
   landmarks: oyoContent.landmarks,
   facilities: oyoContent.facilities,
@@ -103,6 +106,18 @@ export const epe: Estate = {
   // Survey Plan only — it does not carry "C of O in View".
   documentation: oyoContent.documentation.items,
   landTitle: ["Registered Survey Plan"],
+  // Charting letter from the Office of the State Surveyor General, Lagos (owner-supplied scan).
+  letters: [
+    {
+      issuer: "Office of the State Surveyor General, Lagos State",
+      subject: "Charting Information",
+      finding: "Free From all Known Government Acquisition/Revocation",
+      reference: "OSG 272/2026/VOL.XXVI/089",
+      date: "19/10/2026",
+      image: { src: "/docs/epe-charting-letter.webp", alt: "Lagos State Government letter, Office of the State Surveyor General: Re: Application for Charting Information, 19/10/2026" },
+      pdf: "/docs/epe-charting-letter.pdf",
+    },
+  ],
   features: oyoContent.features,
   landmarks: [
     { title: "Lekki-Epe International Airport", body: "25 mins" },
