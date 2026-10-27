@@ -9,7 +9,7 @@ import { blurFor } from "@/lib/media";
 import { Eyebrow, Heading, InView, Shell } from "@/components/primitives";
 
 /**
- * The film is 14.9MB. The <video> element is not rendered at all until the
+ * Films run 15-36MB. The <video> element is not rendered at all until the
  * poster is clicked, so nothing downloads on page load — preload="none" alone
  * is not reliable across browsers.
  */

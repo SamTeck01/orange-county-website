@@ -184,8 +184,8 @@ export const epe: Estate = {
       { src: "/images/epe-gatehouse-lights.webp", alt: "3D render of the gatehouse, its CCTV and the street lights at Orange County, Epe" },
       { src: "/images/epe-dusk-aerial.webp", alt: "3D render of Orange County, Epe, from the air at dusk" },
     ],
-    // 480p preview of the Epe film; swap for the full-quality render when it exists.
-    film: { src: "/video/epe-film-480.mp4", poster: "/images/epe-film-poster.jpg", label: "Film of Orange County, Epe" },
+    // Full-quality Epe film: 1080p, anti-flicker pass, original score.
+    film: { src: "/video/epe-film-1080.mp4", poster: "/images/epe-film-poster.jpg", label: "Film of Orange County, Epe" },
     masterplan: { src: "/images/epe-estate-aerial.webp", alt: "3D render of the labelled masterplan at Orange County, Epe, showing Block A to Block I" },
     // Simplified web export of the render scene (no people, far trees or cars).
     model3d: {
